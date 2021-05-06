@@ -1,10 +1,13 @@
 import Navbar from './Navbar/Navbar';
+import { TodosProvider } from '../contexts/TodosContext';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <Navbar />
-      {children}
+      <TodosProvider>
+        <Navbar />
+        {children}
+      </TodosProvider>
     </>
   );
 };

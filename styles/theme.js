@@ -20,4 +20,13 @@ const theme = {
   },
 };
 
+export const accents = [
+  '#26A581',
+  '#335ED7',
+  '#B5327D',
+  '#E27510',
+  '#848285',
+  // '#E3E0CA',
+];
+
 export default theme;

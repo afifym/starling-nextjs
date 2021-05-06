@@ -2,16 +2,17 @@ import '../styles/globals.css';
 import Layout from '../components/Layout';
 import theme from '../styles/theme';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
-import { Provider } from 'react-redux';
-import store from '../redux/store';
 
 const GlobalStyles = createGlobalStyle`
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
+
     * {
       padding: 0;
       margin: 0;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       color:${({ theme }) => theme.colors.light1};
+      font-family: 'Montserrat', sans-serif;
     }
 
     body{
@@ -42,14 +43,12 @@ const GlobalStyles = createGlobalStyle`
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ThemeProvider>
   );
 }
 
