@@ -3,8 +3,8 @@
 // import Image from 'next/image';
 
 import { resetServerContext } from 'react-beautiful-dnd';
-import Phases from '@/components/phases/Phases';
-import DayProgress from '@/components/DayProgress/DayProgress';
+import Phases from '../components/Phases/Phases';
+import DayProgress from '../components/DayProgress/DayProgress';
 
 const Home = () => {
   return (

@@ -1,23 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Phase from './Phase/Phase';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useTodos } from '../../contexts/TodosContext';
+import { useTodos } from '../../logic/useTodos/useTodos';
+import Tray from '../Tray/Tray';
 
-const Wrapper = styled.div`
-  width: 90%;
-  height: auto;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  div {
-    display: flex;
-  }
-`;
-
-const Phases = () => {
+const Phases: React.FC = () => {
   const { reOrderTodos } = useTodos();
 
   const handleDragEnd = (result) => {
@@ -33,7 +21,7 @@ const Phases = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Wrapper>
+      <Wrapper className=''>
         <div>
           <Phase phase={0} />
           <Phase phase={1} />
@@ -41,9 +29,25 @@ const Phases = () => {
           <Phase phase={3} />
           <Phase phase={4} />
         </div>
+        <div>
+          <Tray />
+        </div>
       </Wrapper>
     </DragDropContext>
   );
 };
 
 export default Phases;
+
+const Wrapper = styled.div`
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div {
+    display: flex;
+  }
+`;

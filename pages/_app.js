@@ -1,6 +1,5 @@
-import '../styles/globals.css';
 import Layout from '../components/Layout';
-import theme from '../styles/theme';
+import theme from '../config/styles/theme';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -18,6 +17,12 @@ const GlobalStyles = createGlobalStyle`
     body{
       background-color: ${({ theme }) => theme.colors.dark1};
     }
+
+  button{
+    cursor:pointer;
+    outline:none;
+    border:none;
+  }
 
     img {
       width: 100%;

@@ -13,6 +13,21 @@
     "noUnusedParameters": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "paths": {
+    "@/components/*": ["components/*"],
+    "@/logic/*": ["logic/*"],
+    "@/interfaces/*": ["config/interfaces/*"],
+    "@/data/*": ["config/data/*"],
+    "@/firebase/*": ["firebase/*"],
+    "@/styles/*": ["config/styles/*"]
   }
 }
