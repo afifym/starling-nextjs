@@ -3,14 +3,14 @@ import Phases from '../components/Phases/Phases';
 import DayProgress from '../components/DayProgress/DayProgress';
 import { Box } from '@chakra-ui/layout';
 import Navbar from '../components/Navbar/Navbar';
-import { useAuth } from '../logic/useAuth/useAuth';
-import { getUserData } from '../firebase/firestore';
-import { useEffect } from 'react';
-import { useTodos } from '../logic/useTodos/useTodos';
+// import { useAuth } from '../logic/useAuth/useAuth';
+// import { getUserData } from '../firebase/firestore';
+// import { useEffect } from 'react';
+// import { useTodos } from '../logic/useTodos/useTodos';
 
 const Home = () => {
-  const { currentUser } = useAuth();
-  const { setTodos } = useTodos();
+  // const { currentUser } = useAuth();
+  // const { setTodos } = useTodos();
 
   // useEffect(() => {
   //   const getData = async (uid) => {
@@ -35,7 +35,7 @@ const Home = () => {
 
 export default Home;
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async () => {
   resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
 
   return { props: { data: [] } };

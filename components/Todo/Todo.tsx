@@ -225,7 +225,7 @@ const TodoHeader: React.FC<ITodoHeader> = ({
   const p = todo.priority;
   return (
     <header>
-      {/* {todo.priority !== '0' && (
+      {todo.priority !== '0' && (
         <Flex alignItems='center' h='20px'>
           {[...Array(parseInt(p)).keys()].map((_, i) => (
             <Circle
@@ -239,7 +239,7 @@ const TodoHeader: React.FC<ITodoHeader> = ({
             />
           ))}
         </Flex>
-      )} */}
+      )}
       <Box maxWidth='180px'>
         {isNewTodo ? (
           <TodoTitleInput

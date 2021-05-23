@@ -10,7 +10,6 @@ import { Alert, AlertIcon, AlertTitle } from '@chakra-ui/alert';
 import { CloseButton } from '@chakra-ui/close-button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getUserData } from '../firebase/firestore';
 
 const Signup = () => {
   const { signup } = useAuth();

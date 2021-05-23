@@ -6,7 +6,7 @@ import {
   IUpdates,
   ITodosState,
   TPriority,
-  ITag,
+  // ITag,
 } from '../../config/interfaces';
 import { v4 as uuid } from 'uuid';
 
@@ -41,7 +41,7 @@ export function useTodos() {
 
 export const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState<ITodosState>(initialState);
-  const [tags, setTags] = useState([] as ITag[]);
+  // const [tags, setTags] = useState([] as ITag[]);
   const [phase, setPhase] = useState(0);
 
   const reOrderTodos = (source: IDndParam, destination: IDndParam): void => {

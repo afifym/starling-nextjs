@@ -1,25 +1,25 @@
-import { ITodo } from '../config/interfaces';
+// import { ITodo } from '../config/interfaces';
 import firebase from './config';
 
 const db = firebase.firestore();
 
-const getTodos = async (uid: string) => {
-  const data: any = await db
-    .collection('users')
-    .doc(uid)
-    .collection('todos')
-    .get();
-  const todos = data.docs.map((doc) => doc.data());
+// const getTodos = async (uid: string) => {
+//   const data: any = await db
+//     .collection('users')
+//     .doc(uid)
+//     .collection('todos')
+//     .get();
+//   const todos = data.docs.map((doc) => doc.data());
 
-  console.log('fetch: ', todos);
-  return todos;
-};
+//   console.log('fetch: ', todos);
+//   return todos;
+// };
 
-const updateTodoTitle = async (todo: ITodo, title: string) => {
-  db.collection('spells')
-    .doc(todo.id)
-    .set({ ...todo, title });
-};
+// const updateTodoTitle = async (todo: ITodo, title: string) => {
+//   db.collection('spells')
+//     .doc(todo.id)
+//     .set({ ...todo, title });
+// };
 
 // }
 export const getUserData = async (uid) => {

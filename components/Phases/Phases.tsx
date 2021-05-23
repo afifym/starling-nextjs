@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Phase from './Phase/Phase';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useTodos } from '../../logic/useTodos/useTodos';

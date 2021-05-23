@@ -1,4 +1,3 @@
-import Navbar from './Navbar/Navbar';
 import { TodosProvider } from '../logic/useTodos/useTodos';
 import { AuthProvider } from '../logic/useAuth/useAuth';
 
