@@ -39,7 +39,7 @@ const Wrapper = styled(Center)`
 
 const NextTodo: React.FC<IProps> = ({ phase }) => {
   const { todos } = useTodos();
-  const nextTodo = todos[phase][0];
+  const nextTodo = todos[phase] && todos[phase][0];
 
   return (
     <Wrapper w='100%' pb={8}>
@@ -59,7 +59,7 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
           position='relative'
           boxShadow='dark-lg'
         >
-          {nextTodo.title}
+          {nextTodo?.title || 'No tasks'}
         </Heading>
       </VStack>
     </Wrapper>

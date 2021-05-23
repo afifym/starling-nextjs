@@ -14,12 +14,12 @@ export interface IProgress {
 }
 
 export interface ITodosState {
-  '-1': ITodo[];
   '0': ITodo[];
   '1': ITodo[];
   '2': ITodo[];
   '3': ITodo[];
   '4': ITodo[];
+  '5': ITodo[];
 }
 
 export interface IDndParam {

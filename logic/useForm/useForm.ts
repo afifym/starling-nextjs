@@ -7,8 +7,6 @@ const useForm = (initialState: IUpdates) => {
   const [formData, setFormData] = useState<IUpdates>(initialState);
 
   const handleFormChange = ({ target }) => {
-    console.log('FORM DATA: ', formData);
-
     if (numberInputs.includes(target.name)) {
       setFormData((state) => ({
         ...state,

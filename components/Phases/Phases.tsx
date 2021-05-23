@@ -42,13 +42,13 @@ const Phases: React.FC = () => {
           w='100%'
           alignItems={{ base: 'center', lg: 'flex-start' }}
         >
-          <Phase phase={0} />
           <Phase phase={1} />
           <Phase phase={2} />
           <Phase phase={3} />
           <Phase phase={4} />
+          <Phase phase={5} />
         </Stack>
-        <Tray phase={5} />
+        <Tray phase={0} />
       </VStack>
     </DragDropContext>
   );

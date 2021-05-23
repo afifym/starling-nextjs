@@ -3,19 +3,19 @@ import { todos } from '../../config/data/mock';
 import {
   ITodo,
   IDndParam,
-  IUpdates,
   ITodosState,
   TPriority,
-  // ITag,
+  ITag,
 } from '../../config/interfaces';
 import { v4 as uuid } from 'uuid';
+import { useAuth } from '../useAuth/useAuth';
+import { updateTags, updateTodos } from '../../firebase/firestore';
 
 interface ITodosContext {
   todos: ITodosState;
   setTodos: React.Dispatch<SetStateAction<ITodosState>>;
   reOrderTodos: (source: IDndParam, destination: IDndParam) => void;
   addEmptyTodo: (phase: number) => string;
-  updateTodo: (id: string, updates: IUpdates) => void;
   getTodosByPhase: (phase: number) => ITodo[];
   getTodo: (id: string) => ITodo;
   changeAccent: (id: string, accent: string) => void;
@@ -29,9 +29,11 @@ interface ITodosContext {
   duplicateTodo: (todoID: string) => void;
   phase: number;
   setPhase: React.Dispatch<SetStateAction<number>>;
+  tags: ITag[];
+  setTags: React.Dispatch<SetStateAction<ITag[]>>;
+  changeUserTags: (tags: ITag[]) => void;
 }
 
-const initialState: ITodosState = todos;
 const phases = [0, 1, 2, 3, 4, 5];
 const TodosContext = createContext<ITodosContext>(undefined as ITodosContext);
 
@@ -40,8 +42,9 @@ export function useTodos() {
 }
 
 export const TodosProvider = ({ children }) => {
-  const [todos, setTodos] = useState<ITodosState>(initialState);
-  // const [tags, setTags] = useState([] as ITag[]);
+  const [todos, setTodos] = useState({} as ITodosState);
+  const { currentUser } = useAuth();
+  const [tags, setTags] = useState([] as ITag[]);
   const [phase, setPhase] = useState(0);
 
   const reOrderTodos = (source: IDndParam, destination: IDndParam): void => {
@@ -50,20 +53,23 @@ export const TodosProvider = ({ children }) => {
 
     if (source.phase === destination.phase) {
       items.splice(destination.index, 0, reorderedItem);
-      setTodos({
+      const newTodos = {
         ...todos,
         [destination.phase]: items,
-      });
+      };
+      currentUser && updateTodos(currentUser.uid, newTodos);
+      setTodos(newTodos);
     } else {
       const sourceItems = [...items];
       const destinationItems = [...todos[destination.phase]];
       destinationItems.splice(destination.index, 0, reorderedItem);
-
-      setTodos({
+      const newTodos = {
         ...todos,
         [source.phase]: sourceItems,
         [destination.phase]: destinationItems,
-      });
+      };
+      currentUser && updateTodos(currentUser.uid, newTodos);
+      setTodos(newTodos);
     }
   };
 
@@ -79,49 +85,36 @@ export const TodosProvider = ({ children }) => {
       priority: '1',
     };
 
-    setTodos({
+    const newTodos = {
       ...todos,
       [phase]: [...todos[phase], newTodo],
-    });
+    };
+    currentUser && updateTodos(currentUser.uid, newTodos);
+    setTodos(newTodos);
     return newID;
   };
 
   const changeTitle = (id: string, title: string): void => {
-    console.log('change title: ', id, title);
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
       const todo = todosCopy[phase].find((t) => t.id === id);
       if (todo) {
         todo.title = title;
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
     }
   };
 
-  const updateTodo = (id: string, updates: IUpdates): void => {
-    console.log('UPDATES: ', updates);
-    const todosCopy = JSON.parse(JSON.stringify(todos));
-    for (let phase = 0; phase < phases.length; phase++) {
-      const todo: ITodo = todosCopy[phase].find((t: ITodo) => t.id === id);
-      if (todo) {
-        for (const prop in updates) {
-          todo[prop] = updates[prop];
-        }
-        break;
-      }
-    }
-    setTodos(todosCopy);
-  };
-
   const changeAccent = (id: string, accent: string): void => {
-    console.log('change accent: ', id, accent);
     const todosCopy = JSON.parse(JSON.stringify(todos));
 
     for (let phase = 0; phase < phases.length; phase++) {
       const todo: ITodo = todosCopy[phase].find((t: ITodo) => t.id === id);
       if (todo) {
         todo.accent = accent;
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
@@ -129,12 +122,12 @@ export const TodosProvider = ({ children }) => {
   };
 
   const changeRepeats = (id: string, repeats: boolean): void => {
-    console.log('change repeats: ', id, repeats);
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
       const todo: ITodo = todosCopy[phase].find((t: ITodo) => t.id === id);
       if (todo) {
         todo.repeats = repeats;
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
@@ -142,12 +135,12 @@ export const TodosProvider = ({ children }) => {
   };
 
   const changeProgress = (id: string, progress: number): void => {
-    console.log('change progress: ', id, progress);
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
       const todo: ITodo = todosCopy[phase].find((t: ITodo) => t.id === id);
       if (todo) {
         todo.progress.current = progress;
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
@@ -155,12 +148,12 @@ export const TodosProvider = ({ children }) => {
   };
 
   const changePriority = (id: string, priority: TPriority): void => {
-    console.log('change priority: ', id, priority);
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
       const todo: ITodo = todosCopy[phase].find((t: ITodo) => t.id === id);
       if (todo) {
         todo.priority = priority;
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
@@ -168,12 +161,12 @@ export const TodosProvider = ({ children }) => {
   };
 
   const changeTags = (id: string, tagIDs: string[]): void => {
-    console.log('change tagIDs: ', id, tagIDs);
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
       const todo: ITodo = todosCopy[phase].find((t: ITodo) => t.id === id);
       if (todo) {
         todo.tags = [...tagIDs];
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
@@ -194,11 +187,17 @@ export const TodosProvider = ({ children }) => {
   const removeTag = (tagID: string) => {
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
+      console.log(tagID);
+      console.log(phase, todosCopy[phase]);
+
       todosCopy[phase] = todosCopy[phase].map((todo) => ({
         ...todo,
         tags: [...todo.tags.filter((id) => id !== tagID)],
       }));
+
+      console.log(phase, todosCopy[phase]);
     }
+    currentUser && updateTodos(currentUser.uid, todosCopy);
     setTodos(todosCopy);
   };
 
@@ -207,6 +206,7 @@ export const TodosProvider = ({ children }) => {
     for (let phase = 0; phase < phases.length; phase++) {
       todosCopy[phase] = todosCopy[phase].filter(({ id }) => id !== todoID);
     }
+    currentUser && updateTodos(currentUser.uid, todosCopy);
     setTodos(todosCopy);
   };
 
@@ -218,10 +218,16 @@ export const TodosProvider = ({ children }) => {
         const newTodo: ITodo = { ...todo };
         newTodo.id = uuid();
         todosCopy[phase] = [...todosCopy[phase], newTodo];
+        currentUser && updateTodos(currentUser.uid, todosCopy);
         setTodos(todosCopy);
         return;
       }
     }
+  };
+
+  const changeUserTags = (tags: ITag[]): void => {
+    currentUser && updateTags(currentUser.uid, tags);
+    setTags(tags);
   };
 
   const value = {
@@ -230,7 +236,6 @@ export const TodosProvider = ({ children }) => {
     reOrderTodos,
     addEmptyTodo,
     changeTitle,
-    updateTodo,
     getTodosByPhase,
     getTodo,
     changeAccent,
@@ -243,6 +248,9 @@ export const TodosProvider = ({ children }) => {
     duplicateTodo,
     phase,
     setPhase,
+    tags,
+    setTags,
+    changeUserTags,
   };
 
   return (

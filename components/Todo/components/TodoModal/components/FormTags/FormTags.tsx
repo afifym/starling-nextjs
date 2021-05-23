@@ -1,7 +1,7 @@
 import { Button, IconButton } from '@chakra-ui/button';
 import { FormControl } from '@chakra-ui/form-control';
 import { Input } from '@chakra-ui/input';
-import { Badge, Box, Center, Flex, HStack } from '@chakra-ui/layout';
+import { Badge, Box, Center, Flex, HStack, Text } from '@chakra-ui/layout';
 import { MenuButton } from '@chakra-ui/menu';
 import {
   Menu,
@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { FaCheck, FaTrash } from 'react-icons/fa';
-import { colors, userTags } from '../../../../../../config/data/mock';
+import { colors } from '../../../../../../config/data/mock';
 import { ITag, ITodo } from '../../../../../../config/interfaces';
 import { useTodos } from '../../../../../../logic/useTodos/useTodos';
 import { RiEdit2Fill } from 'react-icons/ri';
@@ -31,9 +31,8 @@ const getTagsInfo = (tagIDs, userTags) => {
 };
 
 const FormTags: React.FC<IProps> = ({ todo }) => {
-  const { changeTags, removeTag } = useTodos();
-  const [hisTags, setHisTags] = useState(userTags);
-  const tags: ITag[] = getTagsInfo(todo.tags, hisTags);
+  const { changeTags, removeTag, tags, changeUserTags } = useTodos();
+  const tagsInfo: ITag[] = getTagsInfo(todo.tags, tags);
   const [isNewTag, setIsNewTag] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -42,13 +41,13 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
   });
 
   const editTag = (tagID, { name, color }) => {
-    const tags = JSON.parse(JSON.stringify(hisTags));
-    const tag = tags.find((t) => t.id === tagID);
+    const tagss = JSON.parse(JSON.stringify(tags));
+    const tag = tagss.find((t) => t.id === tagID);
     if (tag) {
       tag.name = name;
       tag.color = color;
     }
-    setHisTags(tags);
+    changeUserTags(tags);
   };
 
   const handleRemoveTag = (tagID: string) => {
@@ -63,7 +62,7 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
     if (isNewTag) {
       const newTag = { ...formData, id: uuid() };
       newTag.name = newTag.name || 'new tag';
-      setHisTags([...hisTags, newTag]);
+      changeUserTags([...tags, newTag]);
       setIsNewTag(false);
       setFormData({
         name: '',
@@ -76,7 +75,7 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
 
   const deleteTag = (tagID) => {
     removeTag(tagID);
-    setHisTags([...hisTags.filter((t) => t.id !== tagID)]);
+    changeUserTags([...tags.filter((t) => t.id !== tagID)]);
   };
 
   return (
@@ -84,23 +83,27 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
       <Box position='relative' zIndex={10}>
         <Menu>
           <MenuButton bg='none' px={0} as={Button}>
-            {tags.map((tag, i) => (
-              <Badge
-                key={i}
-                textTransform='none'
-                borderRadius='md'
-                py={2}
-                px={3.5}
-                m={1}
-                fontSize='0.9em'
-                colorScheme={tag.color}
-              >
-                {tag.name}
-              </Badge>
-            ))}
+            {tagsInfo.length > 0 ? (
+              tagsInfo.map((tag, i) => (
+                <Badge
+                  key={i}
+                  textTransform='none'
+                  borderRadius='md'
+                  py={2}
+                  px={3.5}
+                  m={1}
+                  fontSize='0.9em'
+                  colorScheme={tag.color}
+                >
+                  {tag.name}
+                </Badge>
+              ))
+            ) : (
+              <Text px={3}>add tags</Text>
+            )}
           </MenuButton>
           <MenuList>
-            {hisTags.map((tag, i) => (
+            {tags.map((tag, i) => (
               <TagMenuItem
                 key={i}
                 isIncluded={todo.tags.includes(tag.id)}

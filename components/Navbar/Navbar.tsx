@@ -23,8 +23,14 @@ const Navbar: React.FC = () => {
     >
       <Box w={{ base: '100px', lg: '200px' }}>
         <Link href='/'>
-          <a>
-            <Image src='/logo.svg' alt='starling' width={120} height={70} />
+          <a style={{ width: '100px' }}>
+            <Image
+              src='/logo.svg'
+              alt='starling'
+              width={120}
+              height={70}
+              objectFit={'contain'}
+            />
           </a>
         </Link>
       </Box>

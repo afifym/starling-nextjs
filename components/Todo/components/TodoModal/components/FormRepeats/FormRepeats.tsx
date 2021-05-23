@@ -12,7 +12,6 @@ const FormRepeats: React.FC<IProps> = ({ todo }) => {
   const { changeRepeats } = useTodos();
 
   const handleChange = () => {
-    console.log('change here..........');
     changeRepeats(todo.id, !todo.repeats);
   };
 

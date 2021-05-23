@@ -50,8 +50,8 @@ const Tray: React.FC<IProps> = ({ phase }) => {
               ref={provided.innerRef}
             >
               <HStack px={3} py={4} w='100%' minHeight='130px'>
-                {todos['-1'] &&
-                  todos['-1']?.map((todo: ITodo, i: number) => (
+                {todos[phase] &&
+                  todos[phase]?.map((todo: ITodo, i: number) => (
                     <Todo
                       key={todo.id}
                       todo={todo}
@@ -60,6 +60,7 @@ const Tray: React.FC<IProps> = ({ phase }) => {
                       setNewTodoId={setNewTodoId}
                     />
                   ))}
+                {provided.placeholder}
               </HStack>
             </Box>
           )}

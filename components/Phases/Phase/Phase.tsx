@@ -19,20 +19,22 @@ const Phase: React.FC<IProps> = ({ phase }) => {
     setNewTodoId(newID);
   };
 
-  console.log('PHASE: ', phase);
-  console.log(todos);
-
   return (
     <Droppable droppableId={`${phase}`}>
       {(provided: any) => (
         <VStack
-          borderRight={phase % 2 ? { lg: '1px solid hsl(217, 15%, 28%)' } : ''}
-          borderLeft={phase % 2 ? { lg: '1px solid hsl(217, 15%, 28%)' } : ''}
+          borderRight={
+            !(phase % 2) ? { lg: '1px solid hsl(217, 15%, 28%)' } : ''
+          }
+          borderLeft={
+            !(phase % 2) ? { lg: '1px solid hsl(217, 15%, 28%)' } : ''
+          }
           borderBottom={{ base: '1px solid hsl(217, 15%, 28%)', lg: 'none' }}
           w={{ base: '100%', md: '20%' }}
           minHeight='200px'
           mb={3}
           pb={3}
+          px={7}
           h='100%'
           {...provided.droppableProps}
           ref={provided.innerRef}

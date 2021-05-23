@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react';
 import TodoModal from './components/TodoModal/TodoModal';
 import { BsThreeDots } from 'react-icons/bs';
-import { colors, userTags } from '../../config/data/mock';
+import { colors } from '../../config/data/mock';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import { FaTrash } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
@@ -56,7 +56,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
 
   return (
     <Draggable draggableId={todo.id} index={index}>
-      {(provided: any, snapshot) => (
+      {(provided: any) => (
         <Box
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -64,14 +64,13 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
           onClick={() => setIsModalOpen(true)}
           position='relative'
           role='group'
-          w='90%'
+          w='100%'
           maxWidth='220px'
           minWidth='200px'
           bg='gray.700'
           borderRadius='xl'
         >
           <Flex
-            opacity={snapshot.isDragging ? '0.5' : '1'}
             cursor='pointer'
             direction='column'
             p={3}
@@ -81,8 +80,6 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             <IconButton
               opacity={0}
               _groupHover={{ opacity: 1 }}
-              // minHeight='35px'
-              // maxHeight='40%'
               maxHeight='35px'
               h='40%'
               variant='ghost'
@@ -225,7 +222,7 @@ const TodoHeader: React.FC<ITodoHeader> = ({
   const p = todo.priority;
   return (
     <header>
-      {todo.priority !== '0' && (
+      {p && p !== '0' && (
         <Flex alignItems='center' h='20px'>
           {[...Array(parseInt(p)).keys()].map((_, i) => (
             <Circle
@@ -283,13 +280,14 @@ const TodoAccent: React.FC<ITodoComponent> = ({ todo }) => {
 };
 
 const TodoTags: React.FC<ITodoComponent> = ({ todo }) => {
-  const tags: ITag[] = todo?.tags?.map((id) =>
-    userTags.find((t) => t.id === id)
+  const { tags } = useTodos();
+  const todoTags: ITag[] = todo?.tags?.map((id) =>
+    tags.find((t) => t.id === id)
   );
 
   return (
     <HStack>
-      {tags?.map((tag, i) => (
+      {todoTags?.map((tag, i) => (
         <Badge
           key={i}
           textTransform='none'
@@ -297,9 +295,9 @@ const TodoTags: React.FC<ITodoComponent> = ({ todo }) => {
           py={0.9}
           px={1.5}
           fontSize='0.7em'
-          colorScheme={tag.color}
+          colorScheme={tag?.color}
         >
-          {tag.name}
+          {tag?.name}
         </Badge>
       ))}
     </HStack>

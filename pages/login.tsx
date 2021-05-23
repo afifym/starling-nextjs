@@ -42,12 +42,13 @@ const Login = () => {
         py={6}
       >
         <Link href='/'>
-          <a>
+          <a style={{ width: '200px' }}>
             <Image
               src='/logo-starling.svg'
               alt='starling'
               width={200}
               height={170}
+              objectFit={'contain'}
             />
           </a>
         </Link>

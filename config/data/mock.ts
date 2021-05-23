@@ -10,26 +10,6 @@ export const userTags: ITag[] = [
 ];
 
 export const todos: ITodosState = {
-  '-1': [
-    {
-      id: '321',
-      title: 'Reading',
-      accent: '2',
-      tags: ['1', '2'],
-      repeats: false,
-      priority: '0',
-      progress: { current: 10, goal: 3 },
-    },
-    {
-      id: '412',
-      title: 'Working',
-      accent: '3',
-      tags: [],
-      repeats: false,
-      priority: '1',
-      progress: { current: 20, goal: 3 },
-    },
-  ],
   '0': [
     {
       id: '1',
@@ -130,24 +110,24 @@ export const todos: ITodosState = {
       progress: { current: 10, goal: 3 },
     },
   ],
-  // '5': [
-  //   {
-  //     id: '11231',
-  //     title: 'Reading',
-  //     accent: '4',
-  //     tags: ['3', '4'],
-  //     repeats: true,
-  //     priority: '2',
-  //     progress: { current: 0, goal: 3 },
-  //   },
-  //   {
-  //     id: '1123128',
-  //     title: 'Working',
-  //     accent: '3',
-  //     tags: ['1', '2'],
-  //     repeats: true,
-  //     priority: '3',
-  //     progress: { current: 10, goal: 3 },
-  //   },
-  // ],
+  '5': [
+    {
+      id: '321',
+      title: 'Reading',
+      accent: '2',
+      tags: ['1', '2'],
+      repeats: false,
+      priority: '0',
+      progress: { current: 10, goal: 3 },
+    },
+    {
+      id: '412',
+      title: 'Working',
+      accent: '3',
+      tags: [],
+      repeats: false,
+      priority: '1',
+      progress: { current: 20, goal: 3 },
+    },
+  ],
 };

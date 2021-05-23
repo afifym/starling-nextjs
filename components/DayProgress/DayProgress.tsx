@@ -18,7 +18,7 @@ const DayProgress: React.FC = () => {
       0,
       timeNow.diff(timeStart) / timeEnd.diff(timeStart)
     );
-    setProgress(progress + 0.25);
+    setProgress(progress);
 
     const previousPhase = phase;
     const nextPhase = Math.floor(progress * 5);
