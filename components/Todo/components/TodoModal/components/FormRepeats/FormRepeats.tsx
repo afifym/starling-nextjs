@@ -1,5 +1,3 @@
-import { FormControl, FormLabel } from '@chakra-ui/form-control';
-import { Box, HStack, Stack, Text } from '@chakra-ui/layout';
 import { Switch } from '@chakra-ui/switch';
 import React from 'react';
 import { ITodo } from '../../../../../../config/interfaces';

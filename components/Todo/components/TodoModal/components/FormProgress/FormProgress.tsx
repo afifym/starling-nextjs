@@ -1,7 +1,4 @@
 import {
-  FormControl,
-  Stack,
-  FormLabel,
   Slider,
   SliderTrack,
   Box,
@@ -10,11 +7,10 @@ import {
   Text,
   HStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { ITodo } from '../../../../../../config/interfaces';
 import { useTodos } from '../../../../../../logic/useTodos/useTodos';
 import FormWrapper from '../shared/FormWrapper';
-import LabelWrapper from '../shared/LabelWrapper';
 
 interface IProps {
   todo: ITodo;
