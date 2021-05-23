@@ -40,8 +40,17 @@ export function useTodos() {
   return useContext(TodosContext);
 }
 
+const emptyTodos = {
+  '0': [],
+  '1': [],
+  '2': [],
+  '3': [],
+  '4': [],
+  '5': [],
+};
+
 export const TodosProvider = ({ children }) => {
-  const [todos, setTodos] = useState({} as ITodosState);
+  const [todos, setTodos] = useState(emptyTodos as ITodosState);
   const { currentUser } = useAuth();
   const [tags, setTags] = useState([] as ITag[]);
   const [phase, setPhase] = useState(0);
