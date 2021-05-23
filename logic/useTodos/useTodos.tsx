@@ -1,5 +1,4 @@
 import { createContext, SetStateAction, useContext, useState } from 'react';
-import { todos } from '../../config/data/mock';
 import {
   ITodo,
   IDndParam,
