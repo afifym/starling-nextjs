@@ -1,72 +1,67 @@
 import React from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
 import Link from 'next/link';
-
-import { FaSearch, FaBell } from 'react-icons/fa';
-import { MdSettings } from 'react-icons/md';
-
-const Wrapper = styled.nav`
-  margin: 1em;
-  height: 10vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  ul {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    li {
-      min-width: 40px;
-      text-align: center;
-    }
-
-    a {
-      padding: 1em 2em;
-      font-weight: 600;
-    }
-  }
-
-  .signup-btn a {
-    background-color: ${({ theme }) => theme.colors.main1};
-    border-radius: ${({ theme }) => theme.borderRadiuses.borderRadius1};
-  }
-`;
+import { Button } from '@chakra-ui/button';
+import { Box, HStack, Stack } from '@chakra-ui/layout';
+import NextTodo from '../DayProgress/NextTodo/NextTodo';
+import { useTodos } from '../../logic/useTodos/useTodos';
+import { useAuth } from '../../logic/useAuth/useAuth';
 
 const Navbar: React.FC = () => {
+  const { phase } = useTodos();
+  const { currentUser, logout } = useAuth();
+
   return (
-    <Wrapper className=''>
-      <Link href='/'>
-        <a>
-          <Image src='/logo.svg' alt='starling' width={128} height={77} />
-        </a>
-      </Link>
+    <Stack
+      direction={{ base: 'column', lg: 'row' }}
+      justifyContent='space-between'
+      alignItems={{ base: 'normal', lg: 'center' }}
+      mt={4}
+      mx={4}
+      mb={5}
+      position='relative'
+    >
+      <Box w={{ base: '100px', lg: '200px' }}>
+        <Link href='/'>
+          <a>
+            <Image src='/logo.svg' alt='starling' width={120} height={70} />
+          </a>
+        </Link>
+      </Box>
+      <Box w={{ base: '100%', lg: 'auto' }}>
+        <NextTodo phase={phase} />
+      </Box>
 
-      <ul>
-        <li>
-          <FaSearch size={20} />
-        </li>
-        <li>
-          <FaBell size={20} />
-        </li>
-
-        <li>
-          <MdSettings size={23} />
-        </li>
-        <li>
-          <Link href='/login'>
-            <a>Login</a>
-          </Link>
-        </li>
-        <li className='signup-btn'>
-          <Link href='/signup'>
-            <a>Signup</a>
-          </Link>
-        </li>
-      </ul>
-    </Wrapper>
+      <HStack
+        spacing={4}
+        mr={4}
+        w={{ base: '100px', lg: '200px' }}
+        position={{ base: 'absolute', lg: 'static' }}
+        right={{ base: '100px' }}
+        top={{ base: '0' }}
+      >
+        {currentUser?.uid ? (
+          <Button onClick={logout} variant='ghost'>
+            Logout
+          </Button>
+        ) : (
+          <>
+            <Link href='/login'>
+              <a>
+                <Button variant='ghost'>Login</Button>
+              </a>
+            </Link>
+            <Link href='/signup'>
+              <a>
+                <Button variant='ghost' colorScheme='teal'>
+                  Signup
+                </Button>
+              </a>
+            </Link>
+          </>
+        )}
+      </HStack>
+    </Stack>
   );
 };
 

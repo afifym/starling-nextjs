@@ -34,4 +34,5 @@ export const accents = [
   // '#E3E0CA',
 ];
 
+export const priorityColors = ['#C4C4C4', '#DDA01E', '#C1554E'];
 export default theme;

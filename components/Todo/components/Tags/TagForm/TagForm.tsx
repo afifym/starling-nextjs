@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { accents } from '../../../../../config/styles/theme';
 import { ITag } from '../../../../../config/interfaces';
-import { tags as userTags } from '../../../../../logic/useTodos/useTodos';
-import { Tag } from '../Tags';
+import { TagItem } from '../Tags';
+import { userTags } from '../../../../../config/data/mock';
 
 interface IProps {
   id: string;

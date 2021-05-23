@@ -1,9 +1,10 @@
 export interface ITodo {
   id: string;
   title: string;
-  accent: number;
+  accent: string;
   tags: string[];
   repeats: boolean;
+  priority: TPriority;
   progress: { current: number; goal: number };
 }
 
@@ -28,9 +29,10 @@ export interface IDndParam {
 
 export interface IUpdates {
   title?: string;
-  accent?: number;
+  accent?: string;
   tags?: string[];
   repeats: boolean;
+  priority: '0' | '1' | '2' | '3';
   progress?: { current: number; goal: number };
 }
 
@@ -42,5 +44,7 @@ export interface IUserData {
 export interface ITag {
   id: string;
   name: string;
-  color: number;
+  color: string;
 }
+
+export type TPriority = '0' | '1' | '2' | '3';

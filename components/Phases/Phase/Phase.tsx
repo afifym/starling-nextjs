@@ -1,101 +1,79 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
 import Todo from '../../Todo/Todo';
 import { Droppable } from 'react-beautiful-dnd';
 import { useTodos } from '../../../logic/useTodos/useTodos';
 import { ITodo } from '../../../config/interfaces';
-import { GrFormAdd } from 'react-icons/gr';
-
+import { Button } from '@chakra-ui/button';
+import { RiAddLine } from 'react-icons/ri';
+import { VStack } from '@chakra-ui/layout';
 interface IProps {
   phase: number;
 }
 
 const Phase: React.FC<IProps> = ({ phase }) => {
   const { todos, addEmptyTodo } = useTodos();
-  const [newTodo, setNewTodo] = useState<string>(null);
-  const [expandedTodo, setExpandedTodo] = useState<string>(null);
+  const [newTodoId, setNewTodoId] = useState<string>(null);
 
   const handleAddTodo = (): void => {
     const newID: string = addEmptyTodo(phase);
-    setNewTodo(newID);
+    setNewTodoId(newID);
   };
+
+  console.log('PHASE: ', phase);
+  console.log(todos);
 
   return (
     <Droppable droppableId={`${phase}`}>
       {(provided: any) => (
-        <Wrapper
-          phase={phase}
+        <VStack
+          borderRight={phase % 2 ? { lg: '1px solid hsl(217, 15%, 28%)' } : ''}
+          borderLeft={phase % 2 ? { lg: '1px solid hsl(217, 15%, 28%)' } : ''}
+          borderBottom={{ base: '1px solid hsl(217, 15%, 28%)', lg: 'none' }}
+          w={{ base: '100%', md: '20%' }}
+          minHeight='200px'
+          mb={3}
+          pb={3}
+          h='100%'
           {...provided.droppableProps}
           ref={provided.innerRef}
         >
-          {todos[phase].map((todo: ITodo, i: number) => (
-            <Todo
-              key={todo.id}
-              todo={todo}
-              index={i}
-              newTodo={newTodo}
-              setNewTodo={setNewTodo}
-              expandedTodo={expandedTodo}
-              setExpandedTodo={setExpandedTodo}
-            />
-          ))}
+          {todos &&
+            todos[phase]?.map((todo: ITodo, i: number) => (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                index={i}
+                newTodoId={newTodoId}
+                setNewTodoId={setNewTodoId}
+              />
+            ))}
 
           {provided.placeholder}
-          <button className='add-btn' onClick={handleAddTodo}>
-            <GrFormAdd size={20} /> Add Todo
-          </button>
-        </Wrapper>
+          <Button
+            size='sm'
+            variant='ghost'
+            color='whiteAlpha.700'
+            justifyContent='flex-start'
+            w='90%'
+            maxWidth='220px'
+            minWidth='200px'
+            leftIcon={
+              <RiAddLine
+                fill='rgba(255, 255, 255, 0.64)'
+                style={{
+                  marginBottom: '2px',
+                }}
+                size={20}
+              />
+            }
+            onClick={handleAddTodo}
+          >
+            Add Todo
+          </Button>
+        </VStack>
       )}
     </Droppable>
   );
 };
 
 export default Phase;
-
-const Wrapper = styled.div<{ phase: number }>`
-  width: 300px;
-  min-height: 200px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  ${({ phase }) => {
-    if (phase % 2) {
-      return css`
-        border: 1px solid ${({ theme }) => theme.colors.dark2};
-        border-top: none;
-        border-bottom: none;
-      `;
-    }
-  }}
-
-  .add-btn {
-    width: 85%;
-    color: white;
-    background: none;
-    height: 35px;
-    cursor: pointer;
-    text-align: left;
-    border-radius: ${({ theme }) => theme.borderRadiuses.borderRadius1};
-    font-weight: 600;
-    opacity: 0.6;
-
-    transition: all 0.1s ease;
-
-    display: flex;
-    align-items: center;
-
-    svg {
-      margin: 0 0.5em;
-
-      path {
-        stroke: ${({ theme }) => theme.colors.light1};
-      }
-    }
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.dark3};
-      opacity: 0.9;
-    }
-  }
-`;

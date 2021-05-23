@@ -1,13 +1,13 @@
 import React from 'react';
-import { ITodo } from '../../../config/interfaces';
 import { useTodos } from '../../../logic/useTodos/useTodos';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { Center, Heading, Text, VStack } from '@chakra-ui/layout';
 
 interface IProps {
   phase: number;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled(Center)`
   @keyframes next-btn {
     0% {
       transform: scale(1.1);
@@ -20,49 +20,19 @@ const Wrapper = styled.div`
     }
   }
 
-  height: 10vh;
-  margin-bottom: 2em;
+  .animation {
+    &::before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: -1;
 
-  .next-container {
-    width: fit-content;
-    margin: auto;
-
-    h6 {
-      font-size: 0.8rem;
-      margin-bottom: 0.5em;
-      text-align: left;
-      padding-left: 1em;
-      /* transform: translateX(24px); */
-    }
-
-    .next-title {
-      cursor: pointer;
-      width: fit-content;
-      padding: 0.5em 1.6em;
-      margin: auto;
-      color: ${({ theme }) => theme.colors.dark1};
-
-      position: relative;
       border-radius: 48px;
-      font-size: 1.5rem;
-      background-color: ${({ theme }) => theme.colors.light1};
-      filter: drop-shadow(0px 0px 5px #222);
-
-      transition: all 0.3s ease;
-
-      &::before {
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: -1;
-
-        border-radius: 48px;
-        border: 1px solid ${({ theme }) => theme.colors.light1};
-        left: 0;
-        top: 0;
-        animation: next-btn 1s ease infinite;
-      }
+      border: 1px solid ${({ theme }) => theme.colors.light1};
+      left: 0;
+      top: 0;
+      animation: next-btn 1s ease infinite;
     }
   }
 `;
@@ -72,11 +42,26 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
   const nextTodo = todos[phase][0];
 
   return (
-    <Wrapper>
-      <div className='next-container'>
-        <h6>Next Up:</h6>
-        <h1 className='next-title'>{nextTodo.title}</h1>
-      </div>
+    <Wrapper w='100%' pb={8}>
+      <VStack alignItems='flex-start'>
+        <Text pl={4} fontWeight={500} fontSize='small'>
+          Next Up:
+        </Text>
+        <Heading
+          fontSize='3xl'
+          bg='white'
+          color='blackAlpha.800'
+          px={7}
+          py={4}
+          w='fit-content'
+          borderRadius='48px'
+          className='animation'
+          position='relative'
+          boxShadow='dark-lg'
+        >
+          {nextTodo.title}
+        </Heading>
+      </VStack>
     </Wrapper>
   );
 };

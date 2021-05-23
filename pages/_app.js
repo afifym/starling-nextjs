@@ -1,6 +1,15 @@
 import Layout from '../components/Layout';
 import theme from '../config/styles/theme';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import {
+  ThemeProvider as StyledThemeProvider,
+  createGlobalStyle,
+} from 'styled-components';
+import {
+  ThemeProvider as ChakraThemeProvider,
+  CSSReset,
+  extendTheme,
+  ChakraProvider,
+} from '@chakra-ui/react';
 
 const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
@@ -14,9 +23,6 @@ const GlobalStyles = createGlobalStyle`
       font-family: 'Montserrat', sans-serif;
     }
 
-    body{
-      background-color: ${({ theme }) => theme.colors.dark1};
-    }
 
   button{
     cursor:pointer;
@@ -46,14 +52,37 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
+const chakraTheme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+  },
+  styles: {
+    global: {
+      body: {
+        bg: 'gray.800',
+        color: 'black',
+      },
+      a: {
+        color: 'teal.500',
+        _hover: {
+          textDecoration: 'underline',
+        },
+      },
+    },
+  },
+});
+
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
+    <ChakraProvider init theme={chakraTheme}>
+      <CSSReset />
+      <StyledThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </StyledThemeProvider>
+    </ChakraProvider>
   );
 }
 

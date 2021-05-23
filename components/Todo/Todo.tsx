@@ -1,86 +1,205 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import TodoTitleInput from './components/TodoTitleInput/TodoTitleInput';
-import TodoExpansion from './components/TodoExpansion/TodoExpansion';
-import { accents } from '../../config/styles/theme';
+import { ITag, ITodo } from '../../config/interfaces';
+import {
+  Badge,
+  Circle,
+  Flex,
+  HStack,
+  Square,
+  Text,
+  VStack,
+} from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/layout';
+import {
+  Collapse,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Progress,
+  useDisclosure,
+} from '@chakra-ui/react';
+import TodoModal from './components/TodoModal/TodoModal';
+import { BsThreeDots } from 'react-icons/bs';
+import { colors, userTags } from '../../config/data/mock';
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
+import { FaTrash } from 'react-icons/fa';
+import { RiEdit2Fill } from 'react-icons/ri';
+import { HiDuplicate } from 'react-icons/hi';
 import { useTodos } from '../../logic/useTodos/useTodos';
-import useForm from '../../logic/useForm/useForm';
-import { IProgress, ITodo, IUpdates } from '../../config/interfaces';
-import Tags from './components/Tags/Tags';
+import TodoTitleInput from './components/TodoTitleInput/TodoTitleInput';
 
 interface IProps {
   todo: ITodo;
   index: number;
-  newTodo: string;
-  setNewTodo: React.Dispatch<React.SetStateAction<string>>;
-  expandedTodo: string;
-  setExpandedTodo: React.Dispatch<React.SetStateAction<string>>;
+  newTodoId: string;
+  setNewTodoId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Todo: React.FC<IProps> = ({
-  todo,
-  index,
-  newTodo,
-  setNewTodo,
-  expandedTodo,
-  setExpandedTodo,
-}) => {
-  const { formData, handleFormChange } = useForm({
-    title: todo.title,
-    accent: todo.accent,
-    tags: todo.tags,
-    repeats: todo.repeats,
-    progress: todo.progress,
-  } as IUpdates);
-  const { updateTodo } = useTodos();
-  const isExpanded = expandedTodo === todo.id;
+const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
+  const { deleteTodo, duplicateTodo, changeProgress } = useTodos();
+  const { isOpen, onToggle } = useDisclosure();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleBlur = (e) => {
-    console.log('Todo BLUR');
-    if (e.currentTarget?.contains(e.relatedTarget)) return;
-    setExpandedTodo(null);
-    setNewTodo(null);
-    updateTodo(todo.id, formData);
+  const handleExpand = (e) => {
+    if (e?.relatedTarget?.ariaLabel === 'increase-progress') return;
+    e.stopPropagation();
+    onToggle();
+  };
+  const handleIncreaseProgress = (e) => {
+    e.stopPropagation();
+    if (todo?.progress?.current >= 100) return;
+    changeProgress(todo.id, todo?.progress?.current + 10);
   };
 
   return (
     <Draggable draggableId={todo.id} index={index}>
-      {(provided: any) => (
-        <Wrapper
+      {(provided: any, snapshot) => (
+        <Box
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          onClick={() => setExpandedTodo(todo.id)}
-          isExpanded={isExpanded}
-          accent={todo.accent ?? '#000000'}
-          onBlur={handleBlur}
-          progress={formData.progress}
-          hasTags={todo.tags.length > 0}
+          onClick={() => setIsModalOpen(true)}
+          position='relative'
+          role='group'
+          w='90%'
+          maxWidth='220px'
+          minWidth='200px'
+          bg='gray.700'
+          borderRadius='xl'
         >
-          <span className='progress-bar'></span>
-          <header className='header'>
-            {newTodo === todo.id ? (
-              <TodoTitleInput
-                todoTitle={todo.title}
-                todoID={todo.id}
-                setNewTodo={setNewTodo}
-                hasTags={todo.tags.length > 0}
-              />
-            ) : (
-              <h3 className='todo-title'>{todo.title}</h3>
-            )}
-            <Tags id={todo.id} isExpanded={isExpanded} />
-          </header>
-
-          {isExpanded && (
-            <TodoExpansion
-              formData={formData}
-              handleFormChange={handleFormChange}
-              data-testid='todo-settings'
+          <Flex
+            opacity={snapshot.isDragging ? '0.5' : '1'}
+            cursor='pointer'
+            direction='column'
+            p={3}
+            w='100%'
+            position='relative'
+          >
+            <IconButton
+              opacity={0}
+              _groupHover={{ opacity: 1 }}
+              // minHeight='35px'
+              // maxHeight='40%'
+              maxHeight='35px'
+              h='40%'
+              variant='ghost'
+              _focus={{ boxShadow: 'none' }}
+              w='40px'
+              right={0}
+              bottom={0}
+              onClick={handleExpand}
+              onBlur={(e) => isOpen && handleExpand(e)}
+              position='absolute'
+              aria-label='expand'
+              icon={
+                isOpen ? (
+                  <MdKeyboardArrowUp
+                    style={{ pointerEvents: 'none' }}
+                    size={20}
+                  />
+                ) : (
+                  <MdKeyboardArrowDown
+                    style={{ pointerEvents: 'none' }}
+                    size={20}
+                  />
+                )
+              }
             />
-          )}
-        </Wrapper>
+
+            <Square
+              position='absolute'
+              right={0}
+              top={0}
+              borderRadius='xl'
+              w='40px'
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Menu>
+                <MenuButton
+                  maxHeight='35px'
+                  opacity={0}
+                  _groupHover={{ opacity: 1 }}
+                  variant='ghost'
+                  w='40px'
+                  minHeight='35px'
+                  as={IconButton}
+                  bg='gray.700'
+                  aria-label='Options'
+                  icon={<BsThreeDots size={20} />}
+                />
+                <MenuList boxShadow='dark-lg'>
+                  <VStack w='100%'>
+                    <MenuItem onClick={() => setIsModalOpen(true)}>
+                      <HStack>
+                        <RiEdit2Fill size={20} />
+                        <Text color='whiteAlpha.800' fontWeight={500}>
+                          Edit
+                        </Text>
+                      </HStack>
+                    </MenuItem>
+                    <MenuItem onClick={() => deleteTodo(todo.id)}>
+                      <HStack>
+                        <FaTrash size={17} />
+                        <Text color='whiteAlpha.800' fontWeight={500}>
+                          Delete
+                        </Text>
+                      </HStack>
+                    </MenuItem>
+                    <MenuItem onClick={() => duplicateTodo(todo.id)}>
+                      <HStack>
+                        <HiDuplicate size={20} />
+                        <Text color='whiteAlpha.800' fontWeight={500}>
+                          Duplicate
+                        </Text>
+                      </HStack>
+                    </MenuItem>
+                  </VStack>
+                </MenuList>
+              </Menu>
+            </Square>
+
+            <TodoModal
+              todo={todo}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            />
+            <TodoHeader
+              setNewTodoId={setNewTodoId}
+              isNewTodo={newTodoId === todo.id}
+              todo={todo}
+            />
+            <TodoAccent todo={todo} />
+            <Collapse in={isOpen} animateOpacity>
+              <Box w='100%' mt={4}>
+                <VStack alignItems='flex-start' w='80%' spacing={1}>
+                  <IconButton
+                    size='lg'
+                    px={4}
+                    variant='ghost'
+                    aria-label='increase-progress'
+                    onClick={handleIncreaseProgress}
+                    onBlur={(e) => isOpen && handleExpand(e)}
+                    icon={
+                      <Box px={3} pointerEvents='none'>
+                        {todo?.progress?.current}%
+                      </Box>
+                    }
+                  />
+                  <Progress
+                    w='100%'
+                    borderRadius='md'
+                    value={todo?.progress?.current}
+                    colorScheme='green'
+                    size='sm'
+                  />
+                </VStack>
+              </Box>
+            </Collapse>
+          </Flex>
+        </Box>
       )}
     </Draggable>
   );
@@ -88,87 +207,101 @@ const Todo: React.FC<IProps> = ({
 
 export default Todo;
 
-// #####################
-// Styling
-// #####################
-
-interface IWrapperProps {
-  isExpanded: boolean;
-  accent: number;
-  progress: IProgress;
-  hasTags: boolean;
+interface ITodoComponent {
+  todo: ITodo;
 }
-const Wrapper = styled.div<IWrapperProps>`
-  & {
-    cursor: pointer !important;
-    margin: 0.3em 0;
-    width: 85%;
-    min-width: 220px;
-    height: ${({ hasTags }) => (hasTags ? '4em' : '3em')};
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
 
-    transition: opacity 0.1s ease, height 0.2s ease-out;
-    background-color: ${({ theme }) => theme.colors.dark2};
+interface ITodoHeader {
+  isNewTodo: boolean;
+  todo: ITodo;
+  setNewTodoId: any;
+}
 
-    border-left: 4px solid black;
-    border-color: ${({ accent }) => accents[accent]};
-    border-radius: ${({ theme }) => theme.borderRadiuses.borderRadius1};
-    position: relative;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    overflow: hidden;
+const TodoHeader: React.FC<ITodoHeader> = ({
+  todo,
+  isNewTodo,
+  setNewTodoId,
+}) => {
+  const p = todo.priority;
+  return (
+    <header>
+      {/* {todo.priority !== '0' && (
+        <Flex alignItems='center' h='20px'>
+          {[...Array(parseInt(p)).keys()].map((_, i) => (
+            <Circle
+              as='span'
+              size='11px'
+              mr={1}
+              bg='teal.500'
+              borderColor='teal.800'
+              borderWidth='3.5px'
+              key={i}
+            />
+          ))}
+        </Flex>
+      )} */}
+      <Box maxWidth='180px'>
+        {isNewTodo ? (
+          <TodoTitleInput
+            todoID={todo.id}
+            todoTitle={todo.title}
+            setNewTodoId={setNewTodoId}
+          />
+        ) : (
+          <Text fontWeight={500} py={1} fontSize='lg' isTruncated>
+            {todo.title}
+          </Text>
+        )}
+      </Box>
+      {todo?.tags?.length > 0 && (
+        <Box h='20px'>
+          <TodoTags todo={todo} />
+        </Box>
+      )}
+    </header>
+  );
+};
 
-    &:hover {
-      opacity: 0.8;
-    }
-  }
+const TodoAccent: React.FC<ITodoComponent> = ({ todo }) => {
+  return (
+    <Box
+      position='absolute'
+      left='-4px'
+      zIndex={-1}
+      top='50%'
+      h='50%'
+      w='4px'
+      borderRadius='md'
+      bg={`${colors[todo.accent]}.600`}
+      style={{
+        borderTopRightRadius: '0',
+        borderBottomRightRadius: '0',
+        transform: 'translateY(-50%)',
+      }}
+    ></Box>
+  );
+};
 
-  .progress-bar {
-    position: absolute;
-    height: 100%;
-    left: 0;
-    top: 0;
+const TodoTags: React.FC<ITodoComponent> = ({ todo }) => {
+  const tags: ITag[] = todo?.tags?.map((id) =>
+    userTags.find((t) => t.id === id)
+  );
 
-    background-color: ${({ theme }) => theme.colors.dark3};
-    transition: all 0.1s ease;
-
-    width: ${({ progress }) => progress.current * 100}%;
-
-    ${({ progress }) =>
-      progress.current === 1 &&
-      css`
-        background-color: #368336;
-      `};
-  }
-
-  .header {
-    padding: 0 0.8em;
-    padding-top: 1em;
-    width: 100%;
-    height: ${({ isExpanded }) => (isExpanded ? 'auto' : '100%')};
-    z-index: 3;
-
-    .todo-title {
-      /* margin-top: 1em; */
-      width: 100%;
-      color: ${({ theme }) => theme.colors.light1};
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-  }
-
-  ${({ isExpanded }) =>
-    isExpanded &&
-    css`
-      height: 240px;
-      cursor: auto !important;
-    `}
-`;
-// .title-wrapper {
-//   width: 100%;
-//   height: ${({ isExpanded }) => (isExpanded ? 'auto' : '100%')};
-//   display: flex;
-// }
-//   align-items: center;
+  return (
+    <HStack>
+      {tags?.map((tag, i) => (
+        <Badge
+          key={i}
+          textTransform='none'
+          borderRadius='md'
+          py={0.9}
+          px={1.5}
+          fontSize='0.7em'
+          colorScheme={tag.color}
+        >
+          {tag.name}
+        </Badge>
+      ))}
+    </HStack>
+  );
+};

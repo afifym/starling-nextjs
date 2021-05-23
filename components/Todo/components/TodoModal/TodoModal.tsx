@@ -1,188 +1,48 @@
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  Flex,
+} from '@chakra-ui/react';
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { accents } from '../../../../config/styles/theme';
+import { ITodo } from '../../../../config/interfaces';
+import FormAccent from './components/FormAccent/FormAccent';
+import FormPriority from './components/FormPriority/FormPriority';
+import FormProgress from './components/FormProgress/FormProgress';
+import FormRepeats from './components/FormRepeats/FormRepeats';
+import FormTags from './components/FormTags/FormTags';
+import FormTitle from './components/FormTitle/FormTitle';
 
-interface IProps {}
+interface IProps {
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  todo: ITodo;
+}
 
-const TodoModal: React.FC<IProps> = ({ formData, handleFormChange }) => {
+const TodoModal: React.FC<IProps> = ({ isModalOpen, setIsModalOpen, todo }) => {
   return (
-    <Wrapper className=''>
-      <div className='form-field-wrapper accent'>
-        <label htmlFor='accent' className='field-label'>
-          Accent
-        </label>
-        <ul>
-          {accents.map((accent, i) => (
-            <li key={i}>
-              <input
-                onChange={handleFormChange}
-                type='radio'
-                name='accent'
-                id={`accent-${i}`}
-                value={i}
-                checked={i === formData.accent}
-              />
-              <label
-                style={{ backgroundColor: accent }}
-                htmlFor={`accent-${i}`}
-                className={`accent-${i}`}
-              ></label>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className='form-field-wrapper type'>
-        <label htmlFor='type' className='field-label'>
-          Type
-        </label>
-        <ul className=''>
-          {['task', 'habit', 'goal'].map((type, i) => (
-            <li key={i}>
-              <input
-                onChange={handleFormChange}
-                type='radio'
-                name='type'
-                id={`type-${i}`}
-                value={type}
-              />
-              <label htmlFor={`type-${i}`} className={`type-${i}`}>
-                {type}
-              </label>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className='form-field-wrapper progress'>
-        <label htmlFor='type' className='field-label'>
-          Progress
-        </label>
-        <ul className=''>
-          <li>
-            <button
-              onClick={() =>
-                handleFormChange({
-                  target: {
-                    name: 'progress',
-                    value: Math.max(0, formData.progress - 0.25),
-                  },
-                })
-              }
-            >
-              <GrFormSubtract style={{ color: 'white' }} size={20} />
-            </button>
-          </li>
-          <li>{formData.progress * 100}%</li>
-
-          <li>
-            <button
-              onClick={() =>
-                handleFormChange({
-                  target: {
-                    name: 'progress',
-                    value: Math.min(1, formData.progress + 0.25),
-                  },
-                })
-              }
-            >
-              <GrFormAdd size={20} />
-            </button>
-          </li>
-        </ul>
-      </div>
-    </Wrapper>
+    <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <ModalOverlay />
+      <ModalContent maxWidth='700px'>
+        <ModalHeader>
+          <FormTitle todo={todo} />
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Flex flexDirection='column' w='400px' m='auto'>
+            <FormAccent todo={todo} />
+            <FormPriority todo={todo} />
+            <FormTags todo={todo} />
+            <FormProgress todo={todo} />
+            <FormRepeats todo={todo} />
+          </Flex>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 
 export default TodoModal;
-
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 0.5em;
-  padding-top: 3em;
-  position: relative;
-  z-index: 1;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-
-  .form-field-wrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    display: flex;
-    align-items: center;
-
-    ul {
-      width: 70%;
-      display: flex;
-      align-items: center;
-      height: 30px;
-    }
-  }
-
-  .field-label {
-    width: 25%;
-    font-size: 0.8rem;
-    color: ${({ theme }) => theme.colors.light1};
-    text-align: right;
-  }
-
-  .progress {
-    ul {
-      justify-content: space-between;
-    }
-    button {
-      cursor: pointer;
-
-      background-color: ${({ theme }) => theme.colors.dark1};
-      color: ${({ theme }) => theme.colors.light1};
-      height: 100%;
-      width: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: ${({ theme }) => theme.borderRadiuses.borderRadius1};
-
-      svg {
-        path {
-          stroke: ${({ theme }) => theme.colors.light1};
-        }
-      }
-
-      &:hover {
-        opacity: 0.8;
-      }
-    }
-  }
-  .accent {
-    ul {
-      li {
-        display: flex;
-        align-items: center;
-      }
-      label {
-        cursor: pointer;
-        display: block;
-        width: 25px;
-        height: 25px;
-        margin: 0 0.2em;
-      }
-      input {
-        padding: 0;
-        margin: 0;
-        opacity: 0;
-        width: 0;
-        height: 0;
-
-        &:checked + label {
-          border: 3px solid rgb(192, 192, 192);
-          border-radius: 50%;
-        }
-      }
-    }
-  }
-`;

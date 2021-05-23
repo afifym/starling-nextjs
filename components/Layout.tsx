@@ -1,5 +1,6 @@
 import Navbar from './Navbar/Navbar';
 import { TodosProvider } from '../logic/useTodos/useTodos';
+import { AuthProvider } from '../logic/useAuth/useAuth';
 
 interface IProps {
   children: JSX.Element;
@@ -7,10 +8,9 @@ interface IProps {
 
 const Layout: React.FC<IProps> = ({ children }) => {
   return (
-    <TodosProvider>
-      <Navbar />
-      {children}
-    </TodosProvider>
+    <AuthProvider>
+      <TodosProvider>{children}</TodosProvider>
+    </AuthProvider>
   );
 };
 

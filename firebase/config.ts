@@ -10,7 +10,14 @@ const firebaseConfig = {
   messagingSenderId: '338454980374',
   appId: '1:338454980374:web:1cbceea25301ffed3dd237',
 };
-firebase.initializeApp(firebaseConfig);
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
+
+// const perf = firebase.performance();
 
 export default firebase;
 

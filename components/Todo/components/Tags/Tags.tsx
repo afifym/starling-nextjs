@@ -1,79 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { useTodos } from '../../../../logic/useTodos/useTodos';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { ITag } from '../../../../config/interfaces';
 import { accents } from '../../../../config/styles/theme';
-import { FaEdit } from 'react-icons/fa';
-import TagForm from './TagForm/TagForm';
-import { tags as userTags } from '../../../../logic/useTodos/useTodos';
+import { userTags } from '../../../../config/data/mock';
+import { Tag } from '@chakra-ui/tag';
+import { HStack } from '@chakra-ui/layout';
 
 interface IProps {
-  id: string;
-  isExpanded: boolean;
+  tagsIDs: string[];
 }
 
-const Tags: React.FC<IProps> = ({ id, isExpanded }) => {
-  const { getTodo } = useTodos();
-  const [tags, setTags] = useState<ITag[]>([] as ITag[]);
-  const [tagToChange, setTagToChange] = useState('');
-
-  useEffect(() => {
-    const tagsArr = [];
-    const todo = getTodo(id);
-    todo.tags.forEach((tagId) => {
-      const tag = userTags.find((item) => item.id === tagId);
-      tagsArr.push(tag);
-    });
-    setTags(tagsArr);
-  }, []);
+const Tags: React.FC<IProps> = ({ tagsIDs }) => {
+  const tags: ITag[] = userTags.filter((tag) => tagsIDs.includes(tag.id));
 
   return (
-    <Wrapper>
-      <ul className='tags-list'>
-        {tags.map((tag, i) => (
-          <li
-            onClick={() => setTagToChange(tag.id)}
-            className='tag-item'
-            key={i}
-          >
-            <Tag color={accents[tag.color]}>
-              {tag.name}{' '}
-              {isExpanded && (
-                <FaEdit style={{ marginLeft: '0.5em' }} size={12} />
-              )}
-            </Tag>
-          </li>
-        ))}
-      </ul>
-      {isExpanded && tagToChange !== '' && <TagForm id={tagToChange} />}
-    </Wrapper>
+    <HStack>
+      {tags.map((tag, i) => (
+        <Tag key={i} bg={accents[tag.color]}>
+          {tag.name}
+        </Tag>
+      ))}
+    </HStack>
   );
 };
 
 export default Tags;
 
-const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  /* position: absolute; */
-  z-index: 10;
-  top: 43px;
-  left: 1em;
-
-  .tags-list {
-    display: flex;
-  }
-`;
-
-export const Tag = styled.p<{ color: string }>`
+export const TagItem = styled.p<{ color: string }>`
   cursor: pointer;
-  margin-right: 0.3em;
-  padding: 0.3em 0.5em;
+  margin-right: 0.35em;
+  padding: 0.1em 0.7em;
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   font-size: 0.85rem;
   font-weight: 500;
