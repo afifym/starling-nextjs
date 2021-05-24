@@ -4,7 +4,7 @@ import DayProgress from '../components/DayProgress/DayProgress';
 import { Box } from '@chakra-ui/layout';
 import Navbar from '../components/Navbar/Navbar';
 import { useAuth } from '../logic/useAuth/useAuth';
-import { getUserData } from '../firebase/firestore';
+import { getUserData, playWithFirestore } from '../firebase/firestore';
 import { useEffect } from 'react';
 import { useTodos } from '../logic/useTodos/useTodos';
 
@@ -13,6 +13,7 @@ const Home = () => {
   const { setTodos, setTags } = useTodos();
 
   useEffect(() => {
+    playWithFirestore();
     const getData = async (uid) => {
       const userData = await getUserData(uid);
       setTodos(userData.todos);

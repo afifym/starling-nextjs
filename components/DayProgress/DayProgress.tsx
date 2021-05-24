@@ -21,7 +21,7 @@ const DayProgress: React.FC = () => {
     setProgress(progress);
 
     const previousPhase = phase;
-    const nextPhase = Math.floor(progress * 5);
+    const nextPhase = Math.floor(progress * 6);
     nextPhase !== previousPhase && setPhase(nextPhase);
   };
 
@@ -36,7 +36,8 @@ const DayProgress: React.FC = () => {
     >
       <Box position='relative' h='20px' w='100%'>
         <Badge
-          colorScheme='green'
+          colorScheme='teal'
+          textTransform='lowercase'
           fontWeight={400}
           fontSize='1rem'
           position='absolute'
@@ -54,7 +55,7 @@ const DayProgress: React.FC = () => {
         <Progress
           w='100%'
           borderRadius='md'
-          colorScheme='green'
+          colorScheme='teal'
           size='sm'
           value={progress * 100}
         />

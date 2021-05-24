@@ -1,24 +1,14 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { ITag, ITodo } from '../../config/interfaces';
-import {
-  Badge,
-  Circle,
-  Flex,
-  HStack,
-  Square,
-  Text,
-  VStack,
-} from '@chakra-ui/layout';
+import { ITodo } from '../../config/interfaces';
+import { Flex, HStack, Square, Text, VStack } from '@chakra-ui/layout';
 import { Box } from '@chakra-ui/layout';
 import {
-  Collapse,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Progress,
   useDisclosure,
 } from '@chakra-ui/react';
 import TodoModal from './components/TodoModal/TodoModal';
@@ -29,7 +19,8 @@ import { FaTrash } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { HiDuplicate } from 'react-icons/hi';
 import { useTodos } from '../../logic/useTodos/useTodos';
-import TodoTitleInput from './components/TodoTitleInput/TodoTitleInput';
+import TodoHeader from './components/TodoHeader/TodoHeader';
+import TodoExpansion from './components/TodoExpansion/TodoExpansion';
 
 interface IProps {
   todo: ITodo;
@@ -91,6 +82,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
               onBlur={(e) => isOpen && handleExpand(e)}
               position='absolute'
               aria-label='expand'
+              borderRadius='xl'
               icon={
                 isOpen ? (
                   <MdKeyboardArrowUp
@@ -118,6 +110,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                 <MenuButton
                   maxHeight='35px'
                   opacity={0}
+                  borderRadius='xl'
                   _groupHover={{ opacity: 1 }}
                   variant='ghost'
                   w='40px'
@@ -169,32 +162,12 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
               todo={todo}
             />
             <TodoAccent todo={todo} />
-            <Collapse in={isOpen} animateOpacity>
-              <Box w='100%' mt={4}>
-                <VStack alignItems='flex-start' w='80%' spacing={1}>
-                  <IconButton
-                    size='lg'
-                    px={4}
-                    variant='ghost'
-                    aria-label='increase-progress'
-                    onClick={handleIncreaseProgress}
-                    onBlur={(e) => isOpen && handleExpand(e)}
-                    icon={
-                      <Box px={3} pointerEvents='none'>
-                        {todo?.progress?.current}%
-                      </Box>
-                    }
-                  />
-                  <Progress
-                    w='100%'
-                    borderRadius='md'
-                    value={todo?.progress?.current}
-                    colorScheme='green'
-                    size='sm'
-                  />
-                </VStack>
-              </Box>
-            </Collapse>
+            <TodoExpansion
+              isOpen={isOpen}
+              currentProgress={todo?.progress?.current}
+              handleIncreaseProgress={handleIncreaseProgress}
+              handleExpand={handleExpand}
+            />
           </Flex>
         </Box>
       )}
@@ -204,62 +177,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
 
 export default Todo;
 
-interface ITodoComponent {
-  todo: ITodo;
-}
-
-interface ITodoHeader {
-  isNewTodo: boolean;
-  todo: ITodo;
-  setNewTodoId: any;
-}
-
-const TodoHeader: React.FC<ITodoHeader> = ({
-  todo,
-  isNewTodo,
-  setNewTodoId,
-}) => {
-  const p = todo.priority;
-  return (
-    <header>
-      {p && p !== '0' && (
-        <Flex alignItems='center' h='20px'>
-          {[...Array(parseInt(p)).keys()].map((_, i) => (
-            <Circle
-              as='span'
-              size='11px'
-              mr={1}
-              bg='teal.500'
-              borderColor='teal.800'
-              borderWidth='3.5px'
-              key={i}
-            />
-          ))}
-        </Flex>
-      )}
-      <Box maxWidth='180px'>
-        {isNewTodo ? (
-          <TodoTitleInput
-            todoID={todo.id}
-            todoTitle={todo.title}
-            setNewTodoId={setNewTodoId}
-          />
-        ) : (
-          <Text fontWeight={500} py={1} fontSize='lg' isTruncated>
-            {todo.title}
-          </Text>
-        )}
-      </Box>
-      {todo?.tags?.length > 0 && (
-        <Box h='20px'>
-          <TodoTags todo={todo} />
-        </Box>
-      )}
-    </header>
-  );
-};
-
-const TodoAccent: React.FC<ITodoComponent> = ({ todo }) => {
+const TodoAccent: React.FC<{ todo: ITodo }> = ({ todo }) => {
   return (
     <Box
       position='absolute'
@@ -275,31 +193,6 @@ const TodoAccent: React.FC<ITodoComponent> = ({ todo }) => {
         borderBottomRightRadius: '0',
         transform: 'translateY(-50%)',
       }}
-    ></Box>
-  );
-};
-
-const TodoTags: React.FC<ITodoComponent> = ({ todo }) => {
-  const { tags } = useTodos();
-  const todoTags: ITag[] = todo?.tags?.map((id) =>
-    tags.find((t) => t.id === id)
-  );
-
-  return (
-    <HStack>
-      {todoTags?.map((tag, i) => (
-        <Badge
-          key={i}
-          textTransform='none'
-          borderRadius='md'
-          py={0.9}
-          px={1.5}
-          fontSize='0.7em'
-          colorScheme={tag?.color}
-        >
-          {tag?.name}
-        </Badge>
-      ))}
-    </HStack>
+    />
   );
 };

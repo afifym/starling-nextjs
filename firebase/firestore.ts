@@ -1,12 +1,14 @@
 import { ITag, ITodosState } from '../config/interfaces';
 import firebase from './config';
+import 'firebase/firestore';
+
 const db = firebase.firestore();
 
 export const getUserData = async (uid: string) => {
   const ref = await db.collection('users').doc(uid);
-  const refGet = await ref.get();
+  const getRef = await ref.get();
 
-  if (!refGet.exists) {
+  if (!getRef.exists) {
     ref.set(
       {
         todos: {
@@ -32,4 +34,11 @@ export const updateTodos = async (uid: string, todos: ITodosState) => {
 
 export const updateTags = async (uid: string, tags: ITag[]) => {
   await db.collection('users').doc(uid).update({ tags: tags });
+};
+
+export const playWithFirestore = async () => {
+  const snapshot = await db.collection('users').get();
+  const docs = snapshot.docs;
+  const data = docs.map((doc) => doc.data());
+  console.log('OUTPUT: ', data);
 };

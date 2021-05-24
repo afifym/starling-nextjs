@@ -27,7 +27,7 @@ const TodoTitleInput: React.FC<IProps> = ({
   };
 
   return (
-    <Text py={1} fontSize='lg' isTruncated>
+    <Text pb={1} fontSize='lg' isTruncated>
       <input
         style={{
           border: 'none',

@@ -13,7 +13,12 @@ import Image from 'next/image';
 
 const Signup = () => {
   const { signup } = useAuth();
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();

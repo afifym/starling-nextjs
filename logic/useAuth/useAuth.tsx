@@ -6,6 +6,8 @@ interface IAuthContext {
   login: any;
   signup: any;
   logout: any;
+  addImage: (imgURL: string) => void;
+  addDisplayName: (displayName: string) => void;
 }
 
 const AuthContext = React.createContext<IAuthContext>(
@@ -32,6 +34,12 @@ export function AuthProvider({ children }) {
     return auth.signOut();
   };
 
+  const addImage = (photoURL: string) => {
+    auth.currentUser.updateProfile({ photoURL });
+  };
+  const addDisplayName = (displayName: string) => {
+    auth.currentUser.updateProfile({ displayName });
+  };
   // const googleLogin = ()=>{
   //   const provider = auth.GoogleProvider();
 
@@ -49,6 +57,8 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
+    addImage,
+    addDisplayName,
   };
   return (
     <AuthContext.Provider value={value}>
