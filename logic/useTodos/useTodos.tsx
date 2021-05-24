@@ -89,7 +89,7 @@ export const TodosProvider = ({ children }) => {
       accent: '0',
       tags: [],
       repeats: false,
-      progress: { current: 10, goal: 100 },
+      progress: { current: 0, goal: 100 },
       priority: '1',
     };
 
