@@ -34,7 +34,7 @@ const Phase: React.FC<IProps> = ({ phase }) => {
           minHeight='200px'
           mb={3}
           pb={3}
-          px={7}
+          px={9}
           h='100%'
           {...provided.droppableProps}
           ref={provided.innerRef}
@@ -54,14 +54,14 @@ const Phase: React.FC<IProps> = ({ phase }) => {
           <Button
             size='sm'
             variant='ghost'
-            color='whiteAlpha.700'
+            color='whiteAlpha.500'
             justifyContent='flex-start'
             w='90%'
             maxWidth='220px'
             minWidth='200px'
             leftIcon={
               <RiAddLine
-                fill='rgba(255, 255, 255, 0.64)'
+                fill='rgba(255, 255, 255, 0.36)'
                 style={{
                   marginBottom: '2px',
                 }}

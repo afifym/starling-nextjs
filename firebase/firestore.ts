@@ -20,6 +20,7 @@ export const getUserData = async (uid: string) => {
           '5': [],
         },
         tags: [],
+        followPrayers: false,
       },
       { merge: true }
     );
@@ -29,11 +30,15 @@ export const getUserData = async (uid: string) => {
 };
 
 export const updateTodos = async (uid: string, todos: ITodosState) => {
-  await db.collection('users').doc(uid).update({ todos: todos });
+  await db.collection('users').doc(uid).update({ todos });
 };
 
 export const updateTags = async (uid: string, tags: ITag[]) => {
-  await db.collection('users').doc(uid).update({ tags: tags });
+  await db.collection('users').doc(uid).update({ tags });
+};
+
+export const updatePhaseType = async (uid: string, type: boolean) => {
+  await db.collection('users').doc(uid).update({ followPrayers: type });
 };
 
 export const playWithFirestore = async () => {

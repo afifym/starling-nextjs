@@ -7,13 +7,6 @@ import { Stack, VStack } from '@chakra-ui/layout';
 
 const Phases: React.FC = () => {
   const { reOrderTodos } = useTodos();
-  // const { todos, addEmptyTodo } = useTodos();
-  // const [newTodo, setNewTodo] = useState<string>(null);
-
-  // const handleAddTodo = (): void => {
-  //   const newID: string = addEmptyTodo(5);
-  //   setNewTodo(newID);
-  // };
 
   const handleDragEnd = (result) => {
     let { source, destination } = result;

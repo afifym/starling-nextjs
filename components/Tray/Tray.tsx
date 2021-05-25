@@ -23,7 +23,16 @@ const Tray: React.FC<IProps> = ({ phase }) => {
   const [newTodoId, setNewTodoId] = useState<string>(null);
 
   return (
-    <VStack position='fixed' left={0} bottom={0} w='100vw'>
+    <VStack
+      position='fixed'
+      zIndex={50}
+      left={0}
+      bottom={0}
+      w='100vw'
+      maxWidth='100vw'
+      h='fit-content'
+      m='0'
+    >
       <IconButton
         variant='ghost'
         size='sm'
@@ -42,14 +51,14 @@ const Tray: React.FC<IProps> = ({ phase }) => {
         <Droppable droppableId={`${phase}`} direction='horizontal'>
           {(provided: any) => (
             <Box
-              bg='grey.800'
               boxShadow='dark-lg'
+              px={3}
               w='100vw'
-              h='100%'
+              bg='gray.800'
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              <HStack px={3} py={4} w='100%' minHeight='130px'>
+              <HStack spacing={5} w='100%' h='120px' maxWidth='100vw'>
                 {todos[phase] &&
                   todos[phase]?.map((todo: ITodo, i: number) => (
                     <Todo

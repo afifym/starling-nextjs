@@ -9,6 +9,7 @@ import {
 import { v4 as uuid } from 'uuid';
 import { useAuth } from '../useAuth/useAuth';
 import { updateTags, updateTodos } from '../../firebase/firestore';
+import { usePhases } from '../usePhases/usePhases';
 
 interface ITodosContext {
   todos: ITodosState;
@@ -26,14 +27,11 @@ interface ITodosContext {
   removeTag: (id: string) => void;
   deleteTodo: (todoID: string) => void;
   duplicateTodo: (todoID: string) => void;
-  phase: number;
-  setPhase: React.Dispatch<SetStateAction<number>>;
   tags: ITag[];
   setTags: React.Dispatch<SetStateAction<ITag[]>>;
   changeUserTags: (tags: ITag[]) => void;
 }
 
-const phases = [0, 1, 2, 3, 4, 5];
 const TodosContext = createContext<ITodosContext>(undefined as ITodosContext);
 
 export function useTodos() {
@@ -49,11 +47,18 @@ const emptyTodos = {
   '5': [],
 };
 
-export const TodosProvider = ({ children }) => {
-  const [todos, setTodos] = useState(emptyTodos as ITodosState);
+export const TodosProvider: React.FC = ({ children }) => {
+  const { phases } = usePhases();
   const { currentUser } = useAuth();
+
+  const [todos, setTodos] = useState(emptyTodos as ITodosState);
   const [tags, setTags] = useState([] as ITag[]);
-  const [phase, setPhase] = useState(0);
+  let [prayerTimes, setPrayerTimes] = useState({} as any);
+
+  const changePrayerTimes = (p) => {
+    prayerTimes = p;
+    setPrayerTimes(p);
+  };
 
   const reOrderTodos = (source: IDndParam, destination: IDndParam): void => {
     const items = [...todos[source.phase]];
@@ -195,15 +200,10 @@ export const TodosProvider = ({ children }) => {
   const removeTag = (tagID: string) => {
     const todosCopy = JSON.parse(JSON.stringify(todos));
     for (let phase = 0; phase < phases.length; phase++) {
-      console.log(tagID);
-      console.log(phase, todosCopy[phase]);
-
       todosCopy[phase] = todosCopy[phase].map((todo) => ({
         ...todo,
         tags: [...todo.tags.filter((id) => id !== tagID)],
       }));
-
-      console.log(phase, todosCopy[phase]);
     }
     currentUser && updateTodos(currentUser.uid, todosCopy);
     setTodos(todosCopy);
@@ -254,11 +254,12 @@ export const TodosProvider = ({ children }) => {
     removeTag,
     deleteTodo,
     duplicateTodo,
-    phase,
-    setPhase,
     tags,
     setTags,
     changeUserTags,
+    prayerTimes,
+    setPrayerTimes,
+    changePrayerTimes,
   };
 
   return (

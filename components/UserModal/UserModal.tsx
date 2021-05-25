@@ -9,10 +9,15 @@ import {
   Button,
   Input,
   Image,
+  FormControl,
+  FormLabel,
+  Switch,
+  Tooltip,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useAuth } from '../../logic/useAuth/useAuth';
 import { uploadImage } from '../../firebase/storage';
+import { usePhases } from '../../logic/usePhases/usePhases';
 
 interface IProps {
   isModalOpen: boolean;
@@ -21,6 +26,8 @@ interface IProps {
 
 const UserModal: React.FC<IProps> = ({ isModalOpen, setIsModalOpen }) => {
   const { currentUser, addImage, addDisplayName } = useAuth();
+  const { changePhaseType, isFollowPrayers } = usePhases();
+
   const [formData, setFormData] = useState({
     firstName: currentUser?.displayName?.split(' ')[0],
     lastName: currentUser?.displayName?.split(' ')[1],
@@ -83,6 +90,24 @@ const UserModal: React.FC<IProps> = ({ isModalOpen, setIsModalOpen }) => {
                     setFormData({ ...formData, lastName: e.target.value })
                   }
                 />
+
+                <FormControl display='flex' alignItems='center'>
+                  <FormLabel htmlFor='prayer-times' mb='0'>
+                    <Tooltip
+                      label='Split days into phases between prayers, for example, the first phase would start from day start and end at dhuhr prayer, the last phase would start from Isha prayer and end and day end'
+                      aria-label='A tooltip'
+                    >
+                      Follow Prayer Times?
+                    </Tooltip>
+                  </FormLabel>
+                  <Switch
+                    id='prayer-times'
+                    size='md'
+                    defaultIsChecked={isFollowPrayers}
+                    onFocus={() => changePhaseType(!isFollowPrayers)}
+                  />
+                </FormControl>
+
                 <Button type='submit'>Save</Button>
               </VStack>
             </form>

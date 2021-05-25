@@ -11,7 +11,7 @@ import {
   ChakraProvider,
 } from '@chakra-ui/react';
 
-import { analytics } from '../firebase/config';
+import { analytics, perf } from '../firebase/config';
 import { useEffect } from 'react';
 
 const GlobalStyles = createGlobalStyle`
@@ -78,6 +78,7 @@ const chakraTheme = extendTheme({
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     analytics();
+    perf();
   }, []);
 
   return (

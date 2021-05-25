@@ -2,6 +2,7 @@ import React from 'react';
 import { useTodos } from '../../../logic/useTodos/useTodos';
 import styled from 'styled-components';
 import { Center, Heading, Text, VStack } from '@chakra-ui/layout';
+import { usePhases } from '../../../logic/usePhases/usePhases';
 
 interface IProps {
   phase: number;
@@ -38,6 +39,7 @@ const Wrapper = styled(Center)`
 `;
 
 const NextTodo: React.FC<IProps> = ({ phase }) => {
+  const { currentPhase } = usePhases();
   const { todos } = useTodos();
   const nextTodo = todos[phase] && todos[phase][0];
 
@@ -49,8 +51,8 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
         </Text>
         <Heading
           fontSize='3xl'
-          bg='white'
-          color='blackAlpha.800'
+          bg={isNaN(currentPhase) ? 'green' : 'white'}
+          color={isNaN(currentPhase) ? 'white' : 'blackAlpha.800'}
           px={7}
           py={4}
           w='fit-content'
@@ -58,8 +60,11 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
           className='animation'
           position='relative'
           boxShadow='dark-lg'
+          textTransform='capitalize'
         >
-          {nextTodo?.title || 'No tasks'}
+          {isNaN(currentPhase)
+            ? currentPhase + ' Prayer'
+            : nextTodo?.title || 'No tasks'}
         </Heading>
       </VStack>
     </Wrapper>

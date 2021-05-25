@@ -44,7 +44,7 @@ const TodoPriority: React.FC<{ priority: string }> = ({ priority }) => {
               as='span'
               size='11px'
               mr={1}
-              bg='teal.500'
+              bg='teal.400'
               borderColor='teal.800'
               borderWidth='3.5px'
               key={i}

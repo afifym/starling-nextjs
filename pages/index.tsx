@@ -4,20 +4,22 @@ import DayProgress from '../components/DayProgress/DayProgress';
 import { Box } from '@chakra-ui/layout';
 import Navbar from '../components/Navbar/Navbar';
 import { useAuth } from '../logic/useAuth/useAuth';
-import { getUserData, playWithFirestore } from '../firebase/firestore';
+import { getUserData } from '../firebase/firestore';
 import { useEffect } from 'react';
 import { useTodos } from '../logic/useTodos/useTodos';
+import { usePhases } from '../logic/usePhases/usePhases';
 
 const Home = () => {
   const { currentUser } = useAuth();
+  const { setIsFollowPrayers } = usePhases();
   const { setTodos, setTags } = useTodos();
 
   useEffect(() => {
-    playWithFirestore();
     const getData = async (uid) => {
       const userData = await getUserData(uid);
       setTodos(userData.todos);
       setTags(userData.tags);
+      setIsFollowPrayers(userData.followPrayers);
     };
 
     if (currentUser?.uid) {

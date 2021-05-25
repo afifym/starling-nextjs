@@ -24,7 +24,7 @@ if (typeof window != undefined) {
 }
 export const analytics = firebase.analytics;
 
-// firebase.performance();
+export const perf = firebase.performance;
 
 // const perf = firebase.performance();
 

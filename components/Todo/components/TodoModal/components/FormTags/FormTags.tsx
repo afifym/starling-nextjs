@@ -99,7 +99,7 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
                 </Badge>
               ))
             ) : (
-              <Text px={3}>add tags</Text>
+              <Text px={3}>#</Text>
             )}
           </MenuButton>
           <MenuList>
@@ -120,7 +120,7 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
                 ml='auto'
                 aria-label='new-tag'
                 variant={isNewTag ? 'solid' : 'ghost'}
-                colorScheme={isNewTag ? 'whatsapp' : 'grey'}
+                bg={isNewTag ? 'teal.400' : 'grey'}
                 icon={isNewTag ? <FaCheck /> : <RiAddLine size={18} />}
                 onClick={handleAddClick}
               />
@@ -214,7 +214,7 @@ const TagMenuItem: React.FC<ITagMenuItem> = ({
             )}
             <IconButton
               variant={isEditingTag ? 'solid' : 'ghost'}
-              colorScheme={isEditingTag ? 'whatsapp' : 'grey'}
+              bg={isEditingTag ? 'teal.400' : 'grey.100'}
               size='sm'
               icon={isEditingTag ? <FaCheck /> : <RiEdit2Fill />}
               aria-label='edit-tags'
@@ -237,18 +237,23 @@ interface IFormItem {
 
 const CollapseForm: React.FC<IFormItem> = ({ formData, setFormData }) => {
   return (
-    <Center px={4} py={4} w='150px'>
+    <Center bg='blackAlpha.500' px={4} py={2} w='100%'>
       <FormControl>
-        <Box mb={3}>
-          <Input
-            required
-            w='150px'
-            placeholder='tag name'
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
+        <Box w='170px'>
+          <Box mb={2} w='170px'>
+            <Input
+              w='170px'
+              size='sm'
+              required
+              placeholder='tag name'
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
+          </Box>
+          <FormColors formData={formData} setFormData={setFormData} />
         </Box>
-        <FormColors formData={formData} setFormData={setFormData} />
       </FormControl>
     </Center>
   );
@@ -266,7 +271,7 @@ const FormColors: React.FC<IFormItem> = ({ formData, setFormData }) => {
 
   return (
     <FormControl>
-      <HStack {...group}>
+      <HStack justifyContent='space-between' {...group} w='170px'>
         {options.map((value) => {
           const radio = getRadioProps({ value });
           return (
@@ -304,7 +309,7 @@ const ColorRadio = (props) => {
         }}
         px={2}
         py={2}
-        bgColor={props.children}
+        bgColor={`${props.children}.600`}
       />
     </Box>
   );

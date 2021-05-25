@@ -72,7 +72,7 @@ const PriorityRadio = (props) => {
             <Circle
               as='span'
               size='12px'
-              bg='teal.500'
+              bg='teal.400'
               borderColor='teal.800'
               // bg={
               //   p === '1'

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, useRadio, useRadioGroup } from '@chakra-ui/react';
 import { ITodo } from '../../../../../../config/interfaces';
-import { accents } from '../../../../../../config/styles/theme';
 import { useTodos } from '../../../../../../logic/useTodos/useTodos';
 import FormWrapper from '../shared/FormWrapper';
+import { colors } from '../../../../../../config/data/mock';
 
 interface IProps {
   todo: ITodo;
@@ -16,7 +16,7 @@ const FormAccent: React.FC<IProps> = ({ todo }) => {
     changeAccent(todo.id, val);
   };
 
-  const options = ['0', '1', '2', '3', '4'];
+  const options = ['0', '1', '2', '3', '4', '5'];
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'accent',
     defaultValue: todo.accent,
@@ -50,23 +50,43 @@ const ColorRadio = (props) => {
   return (
     <Box as='label'>
       <input {...input} />
-      <Box
-        {...checkbox}
-        cursor='pointer'
-        borderWidth='4px'
-        borderRadius='md'
-        boxShadow='md'
-        _checked={{
-          color: 'white',
-          borderColor: 'white',
-        }}
-        _focus={{
-          boxShadow: 'outline',
-        }}
-        px={5}
-        py={3}
-        bgColor={accents[parseInt(props.children)]}
-      />
+      {props.children ? (
+        <Box
+          {...checkbox}
+          cursor='pointer'
+          borderWidth='4px'
+          borderRadius='md'
+          boxShadow='md'
+          _checked={{
+            color: 'white',
+            borderColor: 'white',
+          }}
+          _focus={{
+            boxShadow: 'outline',
+          }}
+          px={5}
+          py={3}
+          bg={`${colors[props.children]}.600`}
+        />
+      ) : (
+        <Box
+          {...checkbox}
+          cursor='pointer'
+          borderWidth='4px'
+          borderRadius='md'
+          boxShadow='md'
+          _checked={{
+            color: 'white',
+            borderColor: 'white',
+          }}
+          _focus={{
+            boxShadow: 'outline',
+          }}
+          px={5}
+          py={3}
+          bg={`gray.600`}
+        />
+      )}
     </Box>
   );
 };

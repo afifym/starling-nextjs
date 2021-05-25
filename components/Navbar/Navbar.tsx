@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Button } from '@chakra-ui/button';
 import { Box, HStack, Stack } from '@chakra-ui/layout';
 import NextTodo from '../DayProgress/NextTodo/NextTodo';
-import { useTodos } from '../../logic/useTodos/useTodos';
 import { useAuth } from '../../logic/useAuth/useAuth';
 import { Avatar, AvatarBadge } from '@chakra-ui/avatar';
 import {
@@ -18,9 +17,10 @@ import { MdSettings } from 'react-icons/md';
 import UserModal from '../UserModal/UserModal';
 
 import { BiLogOut } from 'react-icons/bi';
+import { usePhases } from '../../logic/usePhases/usePhases';
 
 const Navbar: React.FC = () => {
-  const { phase } = useTodos();
+  const { currentPhase } = usePhases();
   const { currentUser, logout } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
         </Link>
       </Box>
       <Box w={{ base: '100%', lg: 'auto' }}>
-        <NextTodo phase={phase} />
+        <NextTodo phase={currentPhase} />
       </Box>
 
       <HStack
