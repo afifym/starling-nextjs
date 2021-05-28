@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, VStack } from '@chakra-ui/layout';
+import { Box, Heading, HStack, Text, VStack } from '@chakra-ui/layout';
 import {
   Modal,
   ModalOverlay,
@@ -91,10 +91,24 @@ const UserModal: React.FC<IProps> = ({ isModalOpen, setIsModalOpen }) => {
                   }
                 />
 
+                <HStack>
+                  <Text opacity='0.5' fontSize='0.8rem'>
+                    Day Start
+                  </Text>
+                  <Text>7:00 am</Text>
+                </HStack>
+
+                <HStack>
+                  <Text opacity='0.5' fontSize='0.8rem'>
+                    Day End
+                  </Text>
+                  <Text>12:00 am</Text>
+                </HStack>
+
                 <FormControl display='flex' alignItems='center'>
                   <FormLabel htmlFor='prayer-times' mb='0'>
                     <Tooltip
-                      label='Split days into phases between prayers, for example, the first phase would start from day start and end at dhuhr prayer, the last phase would start from Isha prayer and end and day end'
+                      label='Split the day into phases around prayers, for example, the first phase would start from day start and end at dhuhr prayer, the last phase would start from Isha prayer and end and day end'
                       aria-label='A tooltip'
                     >
                       Follow Prayer Times?

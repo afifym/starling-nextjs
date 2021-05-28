@@ -30,7 +30,8 @@ const TodoExpansion: React.FC<IProps> = ({
             onBlur={(e) => isOpen && handleExpand(e)}
             icon={
               <Box px={3} pointerEvents='none'>
-                {currentProgress}%
+                {currentProgress}
+                <span style={{ fontSize: '0.6rem' }}>/6</span>
               </Box>
             }
           />
@@ -38,6 +39,7 @@ const TodoExpansion: React.FC<IProps> = ({
             w='100%'
             borderRadius='md'
             value={currentProgress}
+            max={6}
             colorScheme='green'
             size='sm'
           />

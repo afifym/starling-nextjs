@@ -29,8 +29,8 @@ const FormProgress: React.FC<IProps> = ({ todo }) => {
           onChangeEnd={handleChange}
           defaultValue={todo.progress.current}
           min={0}
-          max={100}
-          step={10}
+          max={6}
+          step={1}
         >
           <SliderTrack bg='red.100'>
             <Box position='relative' right={10} />
@@ -38,7 +38,10 @@ const FormProgress: React.FC<IProps> = ({ todo }) => {
           </SliderTrack>
           <SliderThumb boxSize={6} />
         </Slider>
-        <Text>{todo.progress.current}%</Text>
+        <Text>
+          {todo.progress.current}
+          <span style={{ fontSize: '0.6rem' }}>/6</span>
+        </Text>
       </HStack>
     </FormWrapper>
   );

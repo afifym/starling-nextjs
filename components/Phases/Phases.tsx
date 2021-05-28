@@ -29,7 +29,7 @@ const Phases: React.FC = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <VStack w='100%' px={4} m='auto'>
+      <VStack w='96%' m='auto'>
         <Stack
           direction={{ base: 'column', lg: 'row' }}
           w='100%'

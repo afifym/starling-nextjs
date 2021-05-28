@@ -41,8 +41,11 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
   };
   const handleIncreaseProgress = (e) => {
     e.stopPropagation();
-    if (todo?.progress?.current >= 100) return;
-    changeProgress(todo.id, todo?.progress?.current + 10);
+    // if (todo?.progress?.current >= 100) return;
+    // changeProgress(todo.id, todo?.progress?.current + 10);
+
+    if (todo?.progress?.current >= 6) return;
+    changeProgress(todo.id, todo?.progress?.current + 1);
   };
 
   return (
@@ -58,7 +61,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
           w='100%'
           maxWidth='220px'
           minWidth='200px'
-          bg='gray.700'
+          bg={todo.progress.current < 6 ? 'gray.700' : 'green.700'}
           borderRadius='xl'
         >
           <Flex
@@ -69,7 +72,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             position='relative'
           >
             <IconButton
-              opacity={0}
+              opacity={{ base: 1, lg: 0 }}
               _groupHover={{ opacity: 1 }}
               maxHeight='35px'
               h='40%'
@@ -82,7 +85,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
               onBlur={(e) => isOpen && handleExpand(e)}
               position='absolute'
               aria-label='expand'
-              borderRadius='xl'
+              borderBottomRightRadius='xl'
               icon={
                 isOpen ? (
                   <MdKeyboardArrowUp
@@ -108,10 +111,10 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             >
               <Menu>
                 <MenuButton
-                  maxHeight='35px'
-                  opacity={0}
-                  borderRadius='xl'
+                  opacity={{ base: 1, lg: 0 }}
                   _groupHover={{ opacity: 1 }}
+                  maxHeight='35px'
+                  borderTopRightRadius='xl'
                   variant='ghost'
                   w='40px'
                   minHeight='35px'

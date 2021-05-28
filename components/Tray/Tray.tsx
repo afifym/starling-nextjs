@@ -52,13 +52,20 @@ const Tray: React.FC<IProps> = ({ phase }) => {
           {(provided: any) => (
             <Box
               boxShadow='dark-lg'
-              px={3}
               w='100vw'
               bg='gray.800'
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              <HStack spacing={5} w='100%' h='120px' maxWidth='100vw'>
+              <HStack
+                px={3}
+                spacing={5}
+                w='100vw'
+                h='120px'
+                maxWidth='100vw'
+                overflowX='auto'
+                overflowY='hidden'
+              >
                 {todos[phase] &&
                   todos[phase]?.map((todo: ITodo, i: number) => (
                     <Todo
