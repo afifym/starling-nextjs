@@ -22,7 +22,7 @@ const TodoHeader: React.FC<IProps> = ({ todo, isNewTodo, setNewTodoId }) => {
             setNewTodoId={setNewTodoId}
           />
         ) : (
-          <Text fontWeight={500} pb={1} fontSize='lg' isTruncated>
+          <Text fontWeight={500} fontSize='lg' isTruncated>
             {todo.title}
           </Text>
         )}
@@ -63,7 +63,7 @@ const TodoTags: React.FC<{ todoTags: string[] }> = ({ todoTags }) => {
   const tagsInfo: ITag[] = todoTags?.map((id) => tags.find((t) => t.id === id));
 
   return (
-    <HStack>
+    <HStack mt={1}>
       {tagsInfo?.map((tag, i) => (
         <Badge
           key={i}
