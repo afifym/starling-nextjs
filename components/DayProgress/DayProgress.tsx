@@ -46,13 +46,6 @@ const DayProgress: React.FC = () => {
       id='day-progress'
       pb={4}
     >
-      {/* <div>
-        <p>currentPrayer : {currentPrayer}</p>
-        <p>time now: {timeNow.getHours()}</p>
-        <p>Progress: {p}</p>
-        <p>current phase: {currentPhase}</p>
-      </div> */}
-
       <Box position='relative' h='20px' w='100%'>
         <Badge
           variant='solid'

@@ -28,7 +28,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Box>
+    <Box maxWidth='100vw' overflow='hidden'>
       <Navbar />
       <DayProgress />
       <Phases />
