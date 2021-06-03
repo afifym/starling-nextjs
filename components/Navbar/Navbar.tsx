@@ -29,25 +29,31 @@ const Navbar: React.FC = () => {
       direction={{ base: 'column', lg: 'row' }}
       justifyContent='space-between'
       alignItems={{ base: 'normal', lg: 'center' }}
-      mt={4}
-      mx={4}
-      mb={5}
+      m='auto'
+      mt={9}
+      mb='80px'
+      w='96%'
       position='relative'
     >
       <Box w={{ base: '100px', lg: '200px' }}>
         <Link href='/'>
           <a style={{ width: '100px' }}>
             <Image
-              src='/logo.svg'
+              src='https://firebasestorage.googleapis.com/v0/b/starling-b131b.appspot.com/o/logo-starling.svg?alt=media&token=aabdb7b2-f735-4e69-92b2-c0404f1cc2d6'
               alt='starling'
               width={120}
               height={70}
-              objectFit={'contain'}
+              objectFit='contain'
             />
           </a>
         </Link>
       </Box>
-      <Box w={{ base: '100%', lg: 'auto' }}>
+      <Box
+        position='absolute'
+        top='50%'
+        left='50%'
+        style={{ transform: 'translate(-50%, -50%)' }}
+      >
         <NextTodo phase={currentPhase} />
       </Box>
 
@@ -55,9 +61,9 @@ const Navbar: React.FC = () => {
         spacing={4}
         mr={4}
         w={{ base: '100px', lg: '200px' }}
-        position={{ base: 'absolute', lg: 'static' }}
-        right={{ base: '100px' }}
-        top={{ base: '0' }}
+        // position={{ base: 'absolute', lg: 'static' }}
+        // right={{ base: '100px' }}
+        // top={{ base: '0' }}
       >
         {currentUser?.uid ? (
           <HStack ml='auto' mr={6}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTodos } from '../../../logic/useTodos/useTodos';
 import styled from 'styled-components';
-import { Center, Heading, Text, VStack } from '@chakra-ui/layout';
+import { Center, Heading } from '@chakra-ui/layout';
 import { usePhases } from '../../../logic/usePhases/usePhases';
 
 interface IProps {
@@ -44,11 +44,8 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
   const nextTodo = todos[phase] && todos[phase][0];
 
   return (
-    <Wrapper w='100%' pb={8}>
-      <VStack alignItems='flex-start'>
-        <Text pl={4} fontWeight={500} fontSize='small'>
-          Next Up:
-        </Text>
+    <Wrapper w='100%' h='100%'>
+      <Center h='100%'>
         <Heading
           fontSize='3xl'
           bg={isNaN(currentPhase) ? 'green' : 'white'}
@@ -66,7 +63,7 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
             ? currentPhase + ' Prayer'
             : nextTodo?.title || 'No tasks'}
         </Heading>
-      </VStack>
+      </Center>
     </Wrapper>
   );
 };

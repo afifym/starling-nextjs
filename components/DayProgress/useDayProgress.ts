@@ -40,9 +40,7 @@ const useDayProgress = () => {
   const { currentPhase, setCurrentPhase, times, isFollowPrayers } = usePhases();
   const [progress, setProgress] = useState(0);
 
-  const timeNow = new Date();
-
-  const pTimess = new adhan.PrayerTimes(co, timeNow, params);
+  const pTimess = new adhan.PrayerTimes(co, new Date(), params);
 
   const factors = getPrayerFactors(
     pTimess,
@@ -68,7 +66,7 @@ const useDayProgress = () => {
       modifiedProgress += 0.2;
     }
 
-    if (isPrayerInRange(timeNow, currentPrayerTime)) {
+    if (isPrayerInRange(new Date(), currentPrayerTime)) {
       currentPhase !== currentPrayer && setCurrentPhase(currentPrayer);
     } else {
       const previousPhase = currentPhase;
