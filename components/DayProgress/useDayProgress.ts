@@ -1,4 +1,4 @@
-import { differenceInMilliseconds, differenceInMinutes, set } from 'date-fns';
+import { differenceInMilliseconds, differenceInMinutes } from 'date-fns';
 import { useState } from 'react';
 import { usePhases } from '../../logic/usePhases/usePhases';
 var adhan = require('adhan');
@@ -42,11 +42,7 @@ const useDayProgress = () => {
 
   const pTimess = new adhan.PrayerTimes(co, new Date(), params);
 
-  const factors = getPrayerFactors(
-    pTimess,
-    set(new Date(), { hours: 7 }),
-    set(new Date(), { hours: 24 })
-  );
+  const factors = getPrayerFactors(pTimess, times.start, times.end);
 
   let modifiedProgress = 0;
 

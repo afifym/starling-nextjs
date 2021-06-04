@@ -86,6 +86,7 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
             {tagsInfo.length > 0 ? (
               tagsInfo.map((tag, i) => (
                 <Badge
+                  cursor='pointer'
                   key={i}
                   textTransform='none'
                   borderRadius='md'
@@ -187,9 +188,10 @@ const TagMenuItem: React.FC<ITagMenuItem> = ({
 
   return (
     <Box>
-      <MenuItem onClick={handleTagClick} bg='grey.400'>
+      <MenuItem as='div' onClick={handleTagClick} bg='grey.400'>
         <Flex w='100%' alignItems='center' justifyContent='space-between'>
           <Badge
+            cursor='pointer'
             opacity={isIncluded ? '0.4' : '1'}
             textTransform='none'
             borderRadius='md'

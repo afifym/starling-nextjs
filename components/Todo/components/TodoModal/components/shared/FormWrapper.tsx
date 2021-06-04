@@ -8,7 +8,12 @@ interface IProps {
 const FormWrapper: React.FC<IProps> = ({ children, label, ...props }) => {
   return (
     <HStack my={5} {...props}>
-      <Text minWidth='100px' color='whiteAlpha.800' align='right'>
+      <Text
+        minWidth='80px'
+        textTransform='lowercase'
+        color='whiteAlpha.800'
+        align='right'
+      >
         {label}
       </Text>
       <HStack pl={4} maxHeight='50px'>

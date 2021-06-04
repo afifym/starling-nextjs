@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@chakra-ui/button';
-import { Box, HStack, Stack } from '@chakra-ui/layout';
+import { Box, HStack } from '@chakra-ui/layout';
 import NextTodo from '../DayProgress/NextTodo/NextTodo';
 import { useAuth } from '../../logic/useAuth/useAuth';
 import { Avatar, AvatarBadge } from '@chakra-ui/avatar';
@@ -25,25 +24,22 @@ const Navbar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Stack
-      direction={{ base: 'column', lg: 'row' }}
+    <HStack
       justifyContent='space-between'
-      alignItems={{ base: 'normal', lg: 'center' }}
+      alignItems='center'
       m='auto'
       mt={9}
       mb='80px'
       w='96%'
       position='relative'
+      bg='gray.800'
     >
-      <Box w={{ base: '100px', lg: '200px' }}>
+      <Box w={{ base: '80px', lg: '120px' }}>
         <Link href='/'>
-          <a style={{ width: '100px' }}>
-            <Image
+          <a style={{ width: '100%' }}>
+            <img
               src='https://firebasestorage.googleapis.com/v0/b/starling-b131b.appspot.com/o/logo-starling.svg?alt=media&token=aabdb7b2-f735-4e69-92b2-c0404f1cc2d6'
               alt='starling'
-              width={120}
-              height={70}
-              objectFit='contain'
             />
           </a>
         </Link>
@@ -57,14 +53,7 @@ const Navbar: React.FC = () => {
         <NextTodo phase={currentPhase} />
       </Box>
 
-      <HStack
-        spacing={4}
-        mr={4}
-        w={{ base: '100px', lg: '200px' }}
-        // position={{ base: 'absolute', lg: 'static' }}
-        // right={{ base: '100px' }}
-        // top={{ base: '0' }}
-      >
+      <HStack spacing={4} w={{ base: '100px', lg: '200px' }}>
         {currentUser?.uid ? (
           <HStack ml='auto' mr={6}>
             <UserModal
@@ -79,7 +68,11 @@ const Navbar: React.FC = () => {
                 as={IconButton}
                 aria-label='Options'
                 icon={
-                  <Avatar size='md'>
+                  <Avatar
+                    size='md'
+                    w={{ base: '40px', lg: '60px' }}
+                    h={{ base: '40px', lg: '60px' }}
+                  >
                     {currentUser.photoURL && (
                       <img
                         style={{
@@ -126,7 +119,7 @@ const Navbar: React.FC = () => {
           </>
         )}
       </HStack>
-    </Stack>
+    </HStack>
   );
 };
 

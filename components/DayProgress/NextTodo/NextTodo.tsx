@@ -45,25 +45,24 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
 
   return (
     <Wrapper w='100%' h='100%'>
-      <Center h='100%'>
-        <Heading
-          fontSize='3xl'
-          bg={isNaN(currentPhase) ? 'green' : 'white'}
-          color={isNaN(currentPhase) ? 'white' : 'blackAlpha.800'}
-          px={7}
-          py={4}
-          w='fit-content'
-          borderRadius='48px'
-          className='animation'
-          position='relative'
-          boxShadow='dark-lg'
-          textTransform='capitalize'
-        >
-          {isNaN(currentPhase)
-            ? currentPhase + ' Prayer'
-            : nextTodo?.title || 'No tasks'}
-        </Heading>
-      </Center>
+      <Heading
+        textAlign='center'
+        fontSize='3xl'
+        bg={isNaN(currentPhase) ? 'green' : 'white'}
+        color={isNaN(currentPhase) ? 'white' : 'blackAlpha.800'}
+        px={7}
+        py={4}
+        w='fit-content'
+        borderRadius='48px'
+        className='animation'
+        position='relative'
+        boxShadow='dark-lg'
+        textTransform='capitalize'
+      >
+        {isNaN(currentPhase)
+          ? currentPhase + ' Prayer'
+          : nextTodo?.title || 'No tasks'}
+      </Heading>
     </Wrapper>
   );
 };

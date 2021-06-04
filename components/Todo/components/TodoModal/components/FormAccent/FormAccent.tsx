@@ -54,7 +54,7 @@ const ColorRadio = (props) => {
         <Box
           {...checkbox}
           cursor='pointer'
-          borderWidth='4px'
+          borderWidth='3px'
           borderRadius='md'
           boxShadow='md'
           _checked={{
@@ -64,7 +64,7 @@ const ColorRadio = (props) => {
           _focus={{
             boxShadow: 'outline',
           }}
-          px={5}
+          px={4}
           py={3}
           bg={`${colors[props.children]}.600`}
         />

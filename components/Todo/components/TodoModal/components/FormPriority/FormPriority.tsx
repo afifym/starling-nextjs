@@ -65,7 +65,7 @@ const PriorityRadio = (props) => {
         _focus={{
           boxShadow: 'outline',
         }}
-        px={3}
+        px={2}
       >
         <HStack my={1} h='15px'>
           {[...Array(parseInt(p)).keys()].map((_, i) => (
@@ -74,24 +74,6 @@ const PriorityRadio = (props) => {
               size='12px'
               bg='teal.400'
               borderColor='teal.800'
-              // bg={
-              //   p === '1'
-              //     ? '#378d74'
-              //     : p === '2'
-              //     ? '#d3bb37'
-              //     : p === '3'
-              //     ? '#ca5359'
-              //     : 'grey.100'
-              // }
-              // borderColor={
-              //   p === '1'
-              //     ? '#225748'
-              //     : p === '2'
-              //     ? '#594636'
-              //     : p === '3'
-              //     ? '#5b303d'
-              //     : 'grey.100'
-              // }
               borderWidth='3.5px'
               key={i}
             />

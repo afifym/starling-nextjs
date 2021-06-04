@@ -1,6 +1,6 @@
 import { ITag, ITodosState } from '../interfaces';
 
-export const colors = ['green', 'blue', 'red', 'orange', 'purple', null];
+export const colors = ['green', 'blue', 'red', 'orange', 'purple', ''];
 
 export const userTags: ITag[] = [
   { id: '1', name: 'goal', color: 'green' },
