@@ -6,4 +6,5 @@ module.exports = {
       'https://firebasestorage.googleapis.com',
     ],
   },
+  target: 'serverless',
 };
