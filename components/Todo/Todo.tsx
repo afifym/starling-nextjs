@@ -149,6 +149,8 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                   _groupHover={{ opacity: 1 }}
                   maxHeight='35px'
                   borderTopRightRadius='xl'
+                  borderTopLeftRadius={0}
+                  borderBottomRightRadius={0}
                   w='40px'
                   minHeight='35px'
                   as={IconButton}
