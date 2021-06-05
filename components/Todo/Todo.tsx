@@ -15,7 +15,7 @@ import TodoModal from './components/TodoModal/TodoModal';
 import { BsThreeDots } from 'react-icons/bs';
 import { FiRepeat } from 'react-icons/fi';
 import { colors } from '../../config/data/mock';
-import { FaTrash } from 'react-icons/fa';
+import { FaCheck, FaTrash } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { HiDuplicate } from 'react-icons/hi';
 import { useTodos } from '../../logic/useTodos/useTodos';
@@ -49,6 +49,10 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
     changeProgress(todo.id, todo?.progress?.current + 1);
   };
 
+  const day = new Date().getDay();
+  const dayNum = day === 6 ? 1 : day + 2;
+  const isDoneToday = todo.progress.current === dayNum;
+
   return (
     <Draggable draggableId={todo.id} index={index}>
       {(provided: any) => (
@@ -73,7 +77,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             w='100%'
             position='relative'
           >
-            {todo.repeats && (
+            {todo.repeats && !isDoneToday && (
               <Center
                 maxHeight='35px'
                 minHeight='30px'
@@ -86,6 +90,21 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                 <FiRepeat />
               </Center>
             )}
+
+            {isDoneToday && (
+              <Center
+                maxHeight='35px'
+                minHeight='30px'
+                h='40%'
+                w='40px'
+                right={0}
+                bottom={0}
+                position='absolute'
+              >
+                <FaCheck color='lightgreen' />
+              </Center>
+            )}
+
             {/* <IconButton
               opacity={{ base: 1, lg: 0 }}
               _groupHover={{ opacity: 1 }}
