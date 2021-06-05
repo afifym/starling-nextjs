@@ -9,34 +9,6 @@ import useDayProgress from './useDayProgress';
 const DayProgress: React.FC = () => {
   const { modifiedProgress, setProgress, times } = useDayProgress();
 
-  // if (isFollowPrayers) {
-  //   if (prog > prayers.factors.isha) {
-  //     prog =
-  //       0.8 +
-  //       ((prog - prayers.factors.isha) * 0.2) / (1 - prayers.factors.isha);
-  //   } else if (prog > prayers.factors.maghrib) {
-  //     prog =
-  //       0.6 +
-  //       ((prog - prayers.factors.maghrib) * 0.2) /
-  //         (prayers.factors.isha - prayers.factors.maghrib);
-  //   } else if (prog > prayers.factors.asr) {
-  //     prog =
-  //       0.4 +
-  //       ((prog - prayers.factors.asr) * 0.2) /
-  //         (prayers.factors.maghrib - prayers.factors.asr);
-  //   } else if (prog > prayers.factors.dhuhr) {
-  //     prog =
-  //       0.2 +
-  //       ((prog - prayers.factors.dhuhr) * 0.2) /
-  //         (prayers.factors.asr - prayers.factors.dhuhr);
-  //   } else {
-  //     prog = (prog * 0.2) / prayers.factors.dhuhr;
-  //   }
-  // }
-  // const previousPhase = currentPhase;
-  // const nextPhase = Math.floor(p * 5 + 1);
-  // nextPhase !== previousPhase && setCurrentPhase(nextPhase);
-
   return (
     <VStack
       position='relative'

@@ -31,7 +31,7 @@ const TodoModal: React.FC<IProps> = ({ isModalOpen, setIsModalOpen, todo }) => {
           <FormTitle todo={todo} />
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody px={0}>
           <Flex flexDirection='column' w='400px' m='auto'>
             <FormAccent todo={todo} />
             <FormPriority todo={todo} />

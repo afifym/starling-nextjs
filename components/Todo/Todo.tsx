@@ -133,7 +133,6 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                   w='40px'
                   minHeight='35px'
                   as={IconButton}
-                  // bg='gray.600'
                   aria-label='Options'
                   icon={<BsThreeDots size={20} />}
                 />

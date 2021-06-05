@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Circle, Text, VStack } from '@chakra-ui/layout';
+import { Box, Circle, VStack } from '@chakra-ui/layout';
 import { useRadio, HStack, useRadioGroup } from '@chakra-ui/react';
 import { ITodo, TPriority } from '../../../../../../config/interfaces';
 import { useTodos } from '../../../../../../logic/useTodos/useTodos';
@@ -52,10 +52,11 @@ const PriorityRadio = (props) => {
     <Box as='label'>
       <input {...input} />
       <VStack
-        align='center'
         {...checkbox}
         cursor='pointer'
-        borderWidth='4px'
+        h='30px'
+        minWidth='30px'
+        borderWidth='2px'
         borderRadius='md'
         boxShadow='md'
         _checked={{
@@ -67,7 +68,7 @@ const PriorityRadio = (props) => {
         }}
         px={2}
       >
-        <HStack my={1} h='15px'>
+        <HStack h='100%' px={1} alignItems='center'>
           {[...Array(parseInt(p)).keys()].map((_, i) => (
             <Circle
               as='span'
@@ -79,7 +80,7 @@ const PriorityRadio = (props) => {
             />
           ))}
         </HStack>
-        <Text fontSize='smaller' mt={0}>
+        {/* <Text fontSize='0.7rem'>
           {p === '1'
             ? 'Low'
             : p === '2'
@@ -87,7 +88,7 @@ const PriorityRadio = (props) => {
             : p === '3'
             ? 'High'
             : 'None'}
-        </Text>
+        </Text> */}
       </VStack>
     </Box>
   );

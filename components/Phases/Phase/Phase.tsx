@@ -56,7 +56,7 @@ const Phase: React.FC<IProps> = ({ phase }) => {
             variant='ghost'
             color='whiteAlpha.500'
             justifyContent='flex-start'
-            w='90%'
+            w='100%'
             maxWidth='220px'
             minWidth='200px'
             leftIcon={

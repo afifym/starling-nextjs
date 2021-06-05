@@ -1,10 +1,4 @@
-import {
-  createContext,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, SetStateAction, useContext, useState } from 'react';
 import { differenceInMilliseconds, set } from 'date-fns';
 import { updatePhaseType } from '../../firebase/firestore';
 import { useAuth } from '../useAuth/useAuth';
@@ -80,36 +74,6 @@ export const PhasesProvider: React.FC = ({ children }) => {
   } as any);
   const [isPrayerTime, setIsPrayerTime] = useState(false);
   const [isFollowPrayers, setIsFollowPrayers] = useState(false);
-
-  useEffect(() => {
-    // const prayerTimes = new adhan.PrayerTimes(
-    //   co,
-    //   new Date(),
-    //   params
-    // );
-    // const prayersFactors = getPrayerFactors(
-    //   prayerTimes,
-    //   times.start,
-    //   times.end
-    // );
-    // setPrayers({ times: prayerTimes, factors: prayersFactors });
-    // navigator.geolocation.getCurrentPosition(({ coords }) => {
-    //   var params = adhan.CalculationMethod.MuslimWorldLeague();
-    //   const prayerTimes = new adhan.PrayerTimes(
-    //     new adhan.Coordinates(coords.latitude, coords.longitude),
-    //     new Date(),
-    //     params
-    //   );
-    //   const prayersFactors = getPrayerFactors(
-    //     prayerTimes,
-    //     times.start,
-    //     times.end
-    //   );
-    //   console.log('coords', coords);
-    //   console.log('For: ', prayerTimes, prayersFactors);
-    //   setPrayers({ times: prayerTimes, factors: prayersFactors });
-    // });
-  }, []);
 
   const changePhaseType = (type: boolean): void => {
     console.log('NEW Set: ', type);
