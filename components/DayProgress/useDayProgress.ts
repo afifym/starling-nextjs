@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { usePhases } from '../../logic/usePhases/usePhases';
 var adhan = require('adhan');
 
-const prayersArr = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+const prayersArr = ['sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
 const getPrayerFactors = (prayerTimes, timeStart: Date, timeEnd: Date) => {
   const prayerFactors = {
-    fajr: 0,
+    sunrise: 0,
     dhuhr:
       differenceInMilliseconds(prayerTimes['dhuhr'], timeStart) /
       differenceInMilliseconds(timeEnd, timeStart),

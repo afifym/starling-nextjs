@@ -1,5 +1,5 @@
 import { IconButton } from '@chakra-ui/button';
-import { Box, VStack } from '@chakra-ui/layout';
+import { Box, Text, VStack } from '@chakra-ui/layout';
 import { Progress } from '@chakra-ui/progress';
 import { Collapse } from '@chakra-ui/transition';
 import React from 'react';
@@ -30,8 +30,10 @@ const TodoExpansion: React.FC<IProps> = ({
             onBlur={(e) => isOpen && handleExpand(e)}
             icon={
               <Box px={3} pointerEvents='none'>
-                {currentProgress}
-                <span style={{ fontSize: '0.6rem' }}>/6</span>
+                <Text fontSize='1.2rem' color='teal.200'>
+                  {currentProgress}
+                  <span style={{ fontSize: '0.8rem', color: 'white' }}>/6</span>
+                </Text>
               </Box>
             }
           />
