@@ -1,6 +1,5 @@
 import { IconButton } from '@chakra-ui/button';
 import { Box, Text, VStack } from '@chakra-ui/layout';
-import { Progress } from '@chakra-ui/progress';
 import { Collapse } from '@chakra-ui/transition';
 import React from 'react';
 
@@ -36,14 +35,6 @@ const TodoExpansion: React.FC<IProps> = ({
                 </Text>
               </Box>
             }
-          />
-          <Progress
-            w='100%'
-            borderRadius='md'
-            value={currentProgress}
-            max={6}
-            colorScheme='green'
-            size='sm'
           />
         </VStack>
       </Box>

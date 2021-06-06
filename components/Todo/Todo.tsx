@@ -15,7 +15,7 @@ import TodoModal from './components/TodoModal/TodoModal';
 import { BsThreeDots } from 'react-icons/bs';
 import { FiRepeat } from 'react-icons/fi';
 import { colors } from '../../config/data/mock';
-import { FaCheck, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { HiDuplicate } from 'react-icons/hi';
 import { useTodos } from '../../logic/useTodos/useTodos';
@@ -67,9 +67,42 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
           w='100%'
           maxWidth='220px'
           minWidth='200px'
-          bg={todo.progress.current < 6 ? 'gray.700' : 'green.700'}
+          bg='gray.700'
+          // bg={todo?.progress?.current < 6 ? 'gray.700' : 'green.700'}
           borderRadius='xl'
         >
+          <Box
+            position='absolute'
+            left={0}
+            bottom={0}
+            w='100%'
+            borderRadius='xl'
+            height='25px'
+            overflow='hidden'
+          >
+            <Box
+              w={(todo?.progress?.current * 100) / 6 + '%'}
+              bg={!isDoneToday ? 'teal.500' : 'green.500'}
+              position='absolute'
+              left={0}
+              bottom={0}
+              borderRadius='10px'
+              height='4px'
+              transition='all 0.2s ease'
+            />
+          </Box>
+          {/* <Progress
+            position='absolute'
+            w='100%'
+            borderRadius='xl'
+            value={todo?.progress?.current}
+            max={6}
+            colorScheme='green'
+            size='xs'
+            bottom={0}
+            left={0}
+          /> */}
+
           <Flex
             cursor='pointer'
             direction='column'
@@ -77,21 +110,21 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             w='100%'
             position='relative'
           >
-            {todo.repeats && !isDoneToday && (
+            {todo.repeats && (
               <Center
                 maxHeight='35px'
                 minHeight='30px'
                 h='40%'
                 w='40px'
                 right={0}
-                bottom={0}
+                bottom='5px'
                 position='absolute'
               >
                 <FiRepeat />
               </Center>
             )}
 
-            {isDoneToday && (
+            {/* {isDoneToday && (
               <Center
                 maxHeight='35px'
                 minHeight='30px'
@@ -103,38 +136,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
               >
                 <FaCheck color='lightgreen' />
               </Center>
-            )}
-
-            {/* <IconButton
-              opacity={{ base: 1, lg: 0 }}
-              _groupHover={{ opacity: 1 }}
-              maxHeight='35px'
-              h='40%'
-              variant='ghost'
-              _focus={{ boxShadow: 'none' }}
-              w='40px'
-              right={0}
-              bottom={0}
-              onClick={handleExpand}
-              onBlur={(e) => isOpen && handleExpand(e)}
-              position='absolute'
-              aria-label='expand'
-              borderBottomRightRadius='xl'
-              icon={
-                isOpen ? (
-                  <MdKeyboardArrowUp
-                    style={{ pointerEvents: 'none' }}
-                    size={20}
-                  />
-                ) : (
-                  <MdKeyboardArrowDown
-                    style={{ pointerEvents: 'none' }}
-                    size={20}
-                  />
-                )
-              }
-            /> */}
-
+            )} */}
             <Square
               position='absolute'
               right={0}
