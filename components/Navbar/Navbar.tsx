@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Button } from '@chakra-ui/button';
-import { Box, HStack } from '@chakra-ui/layout';
-import NextTodo from '../DayProgress/NextTodo/NextTodo';
-import { useAuth } from '../../logic/useAuth/useAuth';
-import { Avatar, AvatarBadge } from '@chakra-ui/avatar';
+import React, { useState } from "react";
+import Link from "next/link";
+import { Button } from "@chakra-ui/button";
+import { Box, HStack } from "@chakra-ui/layout";
+import NextTodo from "../DayProgress/NextTodo/NextTodo";
+import { useAuth } from "../../logic/useAuth/useAuth";
+import { Avatar, AvatarBadge } from "@chakra-ui/avatar";
 import {
   Menu,
   MenuButton,
   IconButton,
   MenuList,
   MenuItem,
-} from '@chakra-ui/react';
-import { MdSettings } from 'react-icons/md';
-import UserModal from '../UserModal/UserModal';
+  Wrap,
+} from "@chakra-ui/react";
+import { MdSettings } from "react-icons/md";
+import UserModal from "../UserModal/UserModal";
 
-import { BiLogOut } from 'react-icons/bi';
-import { usePhases } from '../../logic/usePhases/usePhases';
+import { BiLogOut } from "react-icons/bi";
+import { usePhases } from "../../logic/usePhases/usePhases";
 
 const Navbar: React.FC = () => {
   const { currentPhase } = usePhases();
@@ -25,67 +26,67 @@ const Navbar: React.FC = () => {
 
   return (
     <HStack
-      justifyContent='space-between'
-      alignItems='center'
-      m='auto'
+      justifyContent="space-between"
+      alignItems="center"
+      m="auto"
       mt={9}
-      mb='80px'
-      w='96%'
-      position='relative'
-      bg='gray.800'
+      mb="80px"
+      w="96%"
+      position="relative"
+      bg="gray.800"
     >
-      <Box w={{ base: '80px', lg: '120px' }}>
-        <Link href='/'>
-          <a style={{ width: '100%' }}>
+      <Box w={{ base: "80px", lg: "120px" }}>
+        <Link href="/">
+          <a style={{ width: "100%" }}>
             <img
-              src='https://firebasestorage.googleapis.com/v0/b/starling-b131b.appspot.com/o/logo-starling.svg?alt=media&token=aabdb7b2-f735-4e69-92b2-c0404f1cc2d6'
-              alt='starling'
+              src="https://firebasestorage.googleapis.com/v0/b/starling-b131b.appspot.com/o/logo-starling.svg?alt=media&token=aabdb7b2-f735-4e69-92b2-c0404f1cc2d6"
+              alt="starling"
             />
           </a>
         </Link>
       </Box>
       <Box
-        position='absolute'
-        top='50%'
-        left='50%'
-        style={{ transform: 'translate(-50%, -50%)' }}
+        position="absolute"
+        top="50%"
+        left="50%"
+        style={{ transform: "translate(-50%, -50%)" }}
       >
         <NextTodo phase={currentPhase} />
       </Box>
 
-      <HStack spacing={4} w={{ base: '100px', lg: '200px' }}>
+      <Wrap direction="row" spacing={4} w={{ base: "100px", lg: "200px" }}>
         {currentUser?.uid ? (
-          <HStack ml='auto' mr={6}>
+          <HStack ml="auto" mr={6}>
             <UserModal
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
             />
             <Menu>
               <MenuButton
-                _focus={{ boxShadow: 'none' }}
-                variant='ghost'
-                borderRadius='full'
+                _focus={{ boxShadow: "none" }}
+                variant="ghost"
+                borderRadius="full"
                 as={IconButton}
-                aria-label='Options'
+                aria-label="Options"
                 icon={
                   <Avatar
-                    size='md'
-                    w={{ base: '40px', lg: '60px' }}
-                    h={{ base: '40px', lg: '60px' }}
+                    size="md"
+                    w={{ base: "40px", lg: "60px" }}
+                    h={{ base: "40px", lg: "60px" }}
                   >
                     {currentUser.photoURL && (
                       <img
                         style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          borderRadius: '50%',
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: "50%",
                         }}
                         src={currentUser.photoURL}
-                        alt=''
+                        alt=""
                       />
                     )}
-                    <AvatarBadge boxSize='1.25em' bg='green.500' />
+                    <AvatarBadge boxSize="1.25em" bg="green.500" />
                   </Avatar>
                 }
               />
@@ -104,21 +105,21 @@ const Navbar: React.FC = () => {
           </HStack>
         ) : (
           <>
-            <Link href='/login'>
+            <Link href="/login">
               <a>
-                <Button variant='ghost'>Login</Button>
+                <Button variant="ghost">Login</Button>
               </a>
             </Link>
-            <Link href='/signup'>
+            <Link href="/signup">
               <a>
-                <Button variant='ghost' colorScheme='teal'>
+                <Button variant="solid" color="white" colorScheme="teal">
                   Signup
                 </Button>
               </a>
             </Link>
           </>
         )}
-      </HStack>
+      </Wrap>
     </HStack>
   );
 };

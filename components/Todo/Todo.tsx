@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import { ITodo } from '../../config/interfaces';
-import { Center, Flex, HStack, Square, Text, VStack } from '@chakra-ui/layout';
-import { Box } from '@chakra-ui/layout';
+import React, { useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import { ITodo } from "../../config/interfaces";
+import { Center, Flex, HStack, Square, Text, VStack } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import {
   IconButton,
   Menu,
@@ -10,17 +10,17 @@ import {
   MenuItem,
   MenuList,
   useDisclosure,
-} from '@chakra-ui/react';
-import TodoModal from './components/TodoModal/TodoModal';
-import { BsThreeDots } from 'react-icons/bs';
-import { FiRepeat } from 'react-icons/fi';
-import { colors } from '../../config/data/mock';
-import { FaTrash } from 'react-icons/fa';
-import { RiEdit2Fill } from 'react-icons/ri';
-import { HiDuplicate } from 'react-icons/hi';
-import { useTodos } from '../../logic/useTodos/useTodos';
-import TodoHeader from './components/TodoHeader/TodoHeader';
-import TodoExpansion from './components/TodoExpansion/TodoExpansion';
+} from "@chakra-ui/react";
+import TodoModal from "./components/TodoModal/TodoModal";
+import { BsThreeDots } from "react-icons/bs";
+import { FiRepeat } from "react-icons/fi";
+import { colors } from "../../config/data/mock";
+import { FaTrash } from "react-icons/fa";
+import { RiEdit2Fill } from "react-icons/ri";
+import { HiDuplicate } from "react-icons/hi";
+import { useTodos } from "../../logic/useTodos/useTodos";
+import TodoHeader from "./components/TodoHeader/TodoHeader";
+import TodoExpansion from "./components/TodoExpansion/TodoExpansion";
 
 interface IProps {
   todo: ITodo;
@@ -35,7 +35,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleExpand = (e) => {
-    if (e?.relatedTarget?.ariaLabel === 'increase-progress') return;
+    if (e?.relatedTarget?.ariaLabel === "increase-progress") return;
     e.stopPropagation();
     e.target.focus();
     onToggle();
@@ -62,33 +62,32 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
           ref={provided.innerRef}
           onClick={handleExpand}
           onBlur={(e) => isOpen && handleExpand(e)}
-          position='relative'
-          role='group'
-          w='100%'
-          maxWidth='220px'
-          minWidth='200px'
-          bg='gray.700'
-          // bg={todo?.progress?.current < 6 ? 'gray.700' : 'green.700'}
-          borderRadius='xl'
+          position="relative"
+          role="group"
+          w="100%"
+          maxWidth="220px"
+          minWidth="200px"
+          bg="gray.700"
+          borderRadius="xl"
         >
           <Box
-            position='absolute'
+            position="absolute"
             left={0}
             bottom={0}
-            w='100%'
-            borderRadius='xl'
-            height='25px'
-            overflow='hidden'
+            w="100%"
+            borderRadius="xl"
+            height="25px"
+            overflow="hidden"
           >
             <Box
-              w={(todo?.progress?.current * 100) / 6 + '%'}
-              bg={!isDoneToday ? 'teal.500' : 'green.500'}
-              position='absolute'
+              w={(todo?.progress?.current * 100) / 6 + "%"}
+              bg={!isDoneToday ? "whiteAlpha.300" : "green.500"}
+              position="absolute"
               left={0}
               bottom={0}
-              borderRadius='10px'
-              height='4px'
-              transition='all 0.2s ease'
+              borderRadius="10px"
+              height="4px"
+              transition="all 0.2s ease"
             />
           </Box>
           {/* <Progress
@@ -104,21 +103,21 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
           /> */}
 
           <Flex
-            cursor='pointer'
-            direction='column'
+            cursor="pointer"
+            direction="column"
             p={3}
-            w='100%'
-            position='relative'
+            w="100%"
+            position="relative"
           >
             {todo.repeats && (
               <Center
-                maxHeight='35px'
-                minHeight='30px'
-                h='40%'
-                w='40px'
+                maxHeight="35px"
+                minHeight="30px"
+                h="40%"
+                w="40px"
                 right={0}
-                bottom='5px'
-                position='absolute'
+                bottom="5px"
+                position="absolute"
               >
                 <FiRepeat />
               </Center>
@@ -138,33 +137,33 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
               </Center>
             )} */}
             <Square
-              position='absolute'
+              position="absolute"
               right={0}
               top={0}
-              borderRadius='xl'
-              w='40px'
+              borderRadius="xl"
+              w="40px"
               onClick={(e) => e.stopPropagation()}
             >
               <Menu>
                 <MenuButton
                   opacity={{ base: 1, lg: 0 }}
                   _groupHover={{ opacity: 1 }}
-                  maxHeight='35px'
-                  borderTopRightRadius='xl'
+                  maxHeight="35px"
+                  borderTopRightRadius="xl"
                   borderTopLeftRadius={0}
                   borderBottomRightRadius={0}
-                  w='40px'
-                  minHeight='35px'
+                  w="40px"
+                  minHeight="35px"
                   as={IconButton}
-                  aria-label='Options'
+                  aria-label="Options"
                   icon={<BsThreeDots size={20} />}
                 />
-                <MenuList boxShadow='dark-lg'>
-                  <VStack w='100%'>
+                <MenuList boxShadow="dark-lg">
+                  <VStack w="100%">
                     <MenuItem onClick={() => setIsModalOpen(true)}>
                       <HStack>
                         <RiEdit2Fill size={20} />
-                        <Text color='whiteAlpha.800' fontWeight={500}>
+                        <Text color="whiteAlpha.800" fontWeight={500}>
                           Edit
                         </Text>
                       </HStack>
@@ -172,7 +171,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                     <MenuItem onClick={() => deleteTodo(todo.id)}>
                       <HStack>
                         <FaTrash size={17} />
-                        <Text color='whiteAlpha.800' fontWeight={500}>
+                        <Text color="whiteAlpha.800" fontWeight={500}>
                           Delete
                         </Text>
                       </HStack>
@@ -180,7 +179,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                     <MenuItem onClick={() => duplicateTodo(todo.id)}>
                       <HStack>
                         <HiDuplicate size={20} />
-                        <Text color='whiteAlpha.800' fontWeight={500}>
+                        <Text color="whiteAlpha.800" fontWeight={500}>
                           Duplicate
                         </Text>
                       </HStack>
@@ -219,18 +218,18 @@ export default Todo;
 const TodoAccent: React.FC<{ todo: ITodo }> = ({ todo }) => {
   return (
     <Box
-      position='absolute'
-      left='-4px'
+      position="absolute"
+      left="-4px"
       zIndex={-1}
-      top='50%'
-      h='50%'
-      w='4px'
-      borderRadius='md'
+      top="50%"
+      h="50%"
+      w="4px"
+      borderRadius="md"
       bg={`${colors[todo.accent]}.600`}
       style={{
-        borderTopRightRadius: '0',
-        borderBottomRightRadius: '0',
-        transform: 'translateY(-50%)',
+        borderTopRightRadius: "0",
+        borderBottomRightRadius: "0",
+        transform: "translateY(-50%)",
       }}
     />
   );

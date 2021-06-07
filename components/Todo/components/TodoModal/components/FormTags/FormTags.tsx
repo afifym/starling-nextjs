@@ -1,8 +1,8 @@
-import { Button, IconButton } from '@chakra-ui/button';
-import { FormControl } from '@chakra-ui/form-control';
-import { Input } from '@chakra-ui/input';
-import { Badge, Box, Center, Flex, HStack, Text } from '@chakra-ui/layout';
-import { MenuButton } from '@chakra-ui/menu';
+import { Button, IconButton } from "@chakra-ui/button";
+import { FormControl } from "@chakra-ui/form-control";
+import { Input } from "@chakra-ui/input";
+import { Badge, Box, Center, Flex, HStack, Text } from "@chakra-ui/layout";
+import { MenuButton } from "@chakra-ui/menu";
 import {
   Menu,
   MenuList,
@@ -10,16 +10,16 @@ import {
   Collapse,
   useRadio,
   useRadioGroup,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { FaCheck, FaTrash } from 'react-icons/fa';
-import { colors } from '../../../../../../config/data/mock';
-import { ITag, ITodo } from '../../../../../../config/interfaces';
-import { useTodos } from '../../../../../../logic/useTodos/useTodos';
-import { RiEdit2Fill } from 'react-icons/ri';
-import { RiAddLine } from 'react-icons/ri';
-import FormWrapper from '../shared/FormWrapper';
-import { v4 as uuid } from 'uuid';
+} from "@chakra-ui/react";
+import React, { useState } from "react";
+import { FaCheck, FaTrash } from "react-icons/fa";
+import { colors } from "../../../../../../config/data/mock";
+import { ITag, ITodo } from "../../../../../../config/interfaces";
+import { useTodos } from "../../../../../../logic/useTodos/useTodos";
+import { RiEdit2Fill } from "react-icons/ri";
+import { RiAddLine } from "react-icons/ri";
+import FormWrapper from "../shared/FormWrapper";
+import { v4 as uuid } from "uuid";
 
 interface IProps {
   todo: ITodo;
@@ -36,8 +36,8 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
   const [isNewTag, setIsNewTag] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: '',
-    color: 'green',
+    name: "",
+    color: "green",
   });
 
   const editTag = (tagID, { name, color }) => {
@@ -61,12 +61,12 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
   const handleAddClick = () => {
     if (isNewTag) {
       const newTag = { ...formData, id: uuid() };
-      newTag.name = newTag.name || 'new tag';
+      newTag.name = newTag.name || "new tag";
       changeUserTags([...tags, newTag]);
       setIsNewTag(false);
       setFormData({
-        name: '',
-        color: 'green',
+        name: "",
+        color: "green",
       });
     } else {
       setIsNewTag(true);
@@ -79,21 +79,21 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
   };
 
   return (
-    <FormWrapper label='Tags'>
-      <Box position='relative' zIndex={10}>
+    <FormWrapper label="Tags">
+      <Box position="relative" zIndex={10}>
         <Menu>
-          <MenuButton bg='none' px={0} as={Button}>
+          <MenuButton bg="none" px={0} as={Button}>
             {tagsInfo.length > 0 ? (
               tagsInfo.map((tag, i) => (
                 <Badge
-                  cursor='pointer'
+                  cursor="pointer"
                   key={i}
-                  textTransform='none'
-                  borderRadius='md'
+                  textTransform="none"
+                  borderRadius="md"
                   py={2}
                   px={3.5}
                   m={1}
-                  fontSize='0.9em'
+                  fontSize="0.9em"
                   colorScheme={tag.color}
                 >
                   {tag.name}
@@ -117,11 +117,11 @@ const FormTags: React.FC<IProps> = ({ todo }) => {
             ))}
             <MenuItem>
               <IconButton
-                size='sm'
-                ml='auto'
-                aria-label='new-tag'
-                variant={isNewTag ? 'solid' : 'ghost'}
-                bg={isNewTag ? 'teal.400' : 'grey'}
+                size="sm"
+                ml="auto"
+                aria-label="new-tag"
+                variant={isNewTag ? "solid" : "ghost"}
+                bg={isNewTag ? "teal.400" : "grey"}
                 icon={isNewTag ? <FaCheck /> : <RiAddLine size={18} />}
                 onClick={handleAddClick}
               />
@@ -188,16 +188,16 @@ const TagMenuItem: React.FC<ITagMenuItem> = ({
 
   return (
     <Box>
-      <MenuItem as='div' onClick={handleTagClick} bg='grey.400'>
-        <Flex w='100%' alignItems='center' justifyContent='space-between'>
+      <MenuItem as="div" onClick={handleTagClick} bg="grey.400">
+        <Flex w="100%" alignItems="center" justifyContent="space-between">
           <Badge
-            cursor='pointer'
-            opacity={isIncluded ? '0.4' : '1'}
-            textTransform='none'
-            borderRadius='md'
+            cursor="pointer"
+            opacity={isIncluded ? "0.4" : "1"}
+            textTransform="none"
+            borderRadius="md"
             py={2}
             px={3.5}
-            fontSize='0.9em'
+            fontSize="0.7em"
             colorScheme={tag.color}
           >
             {tag.name}
@@ -206,20 +206,20 @@ const TagMenuItem: React.FC<ITagMenuItem> = ({
             {isEditingTag && (
               <IconButton
                 mr={2}
-                variant='ghost'
-                colorScheme='red'
-                size='md'
+                variant="ghost"
+                colorScheme="red"
+                size="md"
                 icon={<FaTrash />}
-                aria-label='edit-tags'
+                aria-label="edit-tags"
                 onClick={handleRemoveClick}
               />
             )}
             <IconButton
-              variant={isEditingTag ? 'solid' : 'ghost'}
-              bg={isEditingTag ? 'teal.400' : 'grey.100'}
-              size='sm'
+              variant={isEditingTag ? "solid" : "ghost"}
+              bg={isEditingTag ? "teal.400" : "grey.100"}
+              size="sm"
               icon={isEditingTag ? <FaCheck /> : <RiEdit2Fill />}
-              aria-label='edit-tags'
+              aria-label="edit-tags"
               onClick={handleEditClick}
             />
           </Box>
@@ -239,15 +239,15 @@ interface IFormItem {
 
 const CollapseForm: React.FC<IFormItem> = ({ formData, setFormData }) => {
   return (
-    <Center bg='blackAlpha.500' px={4} py={2} w='100%'>
+    <Center bg="blackAlpha.500" px={4} py={2} w="100%">
       <FormControl>
-        <Box w='170px'>
-          <Box mb={2} w='170px'>
+        <Box w="170px">
+          <Box mb={2} w="170px">
             <Input
-              w='170px'
-              size='sm'
+              w="170px"
+              size="sm"
               required
-              placeholder='tag name'
+              placeholder="tag name"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -264,7 +264,7 @@ const CollapseForm: React.FC<IFormItem> = ({ formData, setFormData }) => {
 const FormColors: React.FC<IFormItem> = ({ formData, setFormData }) => {
   const options = colors;
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'color',
+    name: "color",
     defaultValue: formData.color,
     onChange: (val) => setFormData({ ...formData, color: val }),
   });
@@ -273,7 +273,7 @@ const FormColors: React.FC<IFormItem> = ({ formData, setFormData }) => {
 
   return (
     <FormControl>
-      <HStack justifyContent='space-between' {...group} w='170px'>
+      <HStack justifyContent="space-between" {...group} w="170px">
         {options.map((value) => {
           const radio = getRadioProps({ value });
           return (
@@ -294,20 +294,20 @@ const ColorRadio = (props) => {
   const checkbox = getCheckboxProps();
 
   return (
-    <Box as='label'>
+    <Box as="label">
       <input {...input} />
       <Box
         {...checkbox}
-        cursor='pointer'
-        borderWidth='3px'
-        borderRadius='sm'
-        boxShadow='sm'
+        cursor="pointer"
+        borderWidth="3px"
+        borderRadius="sm"
+        boxShadow="sm"
         _checked={{
-          color: 'white',
-          borderColor: 'white',
+          color: "white",
+          borderColor: "white",
         }}
         _focus={{
-          boxShadow: 'outline',
+          boxShadow: "outline",
         }}
         px={2}
         py={2}
