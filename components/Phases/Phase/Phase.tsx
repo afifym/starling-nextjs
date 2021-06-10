@@ -6,6 +6,7 @@ import { ITodo } from "../../../config/interfaces";
 import { Button } from "@chakra-ui/button";
 import { RiAddLine } from "react-icons/ri";
 import { VStack } from "@chakra-ui/layout";
+import { usePhases } from "../../../logic/usePhases/usePhases";
 interface IProps {
   phase: number;
 }
@@ -13,6 +14,7 @@ interface IProps {
 const Phase: React.FC<IProps> = ({ phase }) => {
   const { todos, addEmptyTodo } = useTodos();
   const [newTodoId, setNewTodoId] = useState<string>(null);
+  const { currentPhase } = usePhases();
 
   const handleAddTodo = (): void => {
     const newID: string = addEmptyTodo(phase);
@@ -23,6 +25,9 @@ const Phase: React.FC<IProps> = ({ phase }) => {
     <Droppable droppableId={`${phase}`}>
       {(provided: any) => (
         <VStack
+          bg={currentPhase === phase ? "blackAlpha.300" : ""}
+          borderRadius={currentPhase === phase ? "lg" : ""}
+          pt={4}
           borderRight={
             !(phase % 2) ? { lg: "1px solid hsl(217, 15%, 28%)" } : ""
           }
