@@ -1,5 +1,4 @@
 import Layout from "../components/Layout";
-import theme from "../config/styles/theme";
 
 import {
   ThemeProvider as ChakraThemeProvider,
