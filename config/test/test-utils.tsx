@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-import '@testing-library/jest-dom';
-import React from 'react';
-import theme from '../styles/theme';
+import { render } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import React from "react";
+import theme from "../styles/theme";
+import { ThemeProvider } from "@chakra-ui/react";
 
 interface IProps {
   children: JSX.Element;
@@ -18,5 +18,5 @@ const customRender = (ui, options) =>
     ...options,
   });
 
-export * from '@testing-library/react';
+export * from "@testing-library/react";
 export { customRender as render };
