@@ -11,10 +11,12 @@ interface IProps {
   handleIncreaseProgress: any;
   currentProgress: number;
   handleCheckTodo: any;
+  isRepeats: boolean;
 }
 
 const TodoExpansion: React.FC<IProps> = ({
   isOpen,
+  isRepeats,
   handleIncreaseProgress,
   handleCheckTodo,
   handleExpand,
@@ -29,22 +31,28 @@ const TodoExpansion: React.FC<IProps> = ({
           w="100%"
           spacing={1}
         >
-          <IconButton
-            size="lg"
-            px={4}
-            variant="ghost"
-            aria-label="increase-progress"
-            onClick={handleIncreaseProgress}
-            onBlur={(e) => isOpen && handleExpand(e)}
-            icon={
-              <Box px={3} pointerEvents="none">
-                <Text fontSize="1.2rem" color="green.400">
-                  {currentProgress}
-                  <span style={{ fontSize: "0.8rem", color: "white" }}>/6</span>
-                </Text>
-              </Box>
-            }
-          />
+          {isRepeats ? (
+            <IconButton
+              size="lg"
+              px={4}
+              variant="ghost"
+              aria-label="increase-progress"
+              onClick={handleIncreaseProgress}
+              onBlur={(e) => isOpen && handleExpand(e)}
+              icon={
+                <Box px={3} pointerEvents="none">
+                  <Text fontSize="1.2rem" color="green.400">
+                    {currentProgress}
+                    <span style={{ fontSize: "0.8rem", color: "white" }}>
+                      /6
+                    </span>
+                  </Text>
+                </Box>
+              }
+            />
+          ) : (
+            <span />
+          )}
           <IconButton
             size="lg"
             color="green.400"

@@ -113,26 +113,28 @@ const Todo: React.FC<IProps> = ({
           bg="gray.700"
           borderRadius="xl"
         >
-          <Box
-            position="absolute"
-            left={0}
-            bottom={0}
-            w="100%"
-            borderRadius="xl"
-            height="25px"
-            overflow="hidden"
-          >
+          {todo.repeats && (
             <Box
-              w={(todo?.progress?.current * 100) / 6 + "%"}
-              bg={!isDoneToday ? "whiteAlpha.300" : "green.500"}
               position="absolute"
               left={0}
               bottom={0}
-              borderRadius="10px"
-              height="4px"
-              transition="all 0.2s ease"
-            />
-          </Box>
+              w="100%"
+              borderRadius="xl"
+              height="25px"
+              overflow="hidden"
+            >
+              <Box
+                w={(todo?.progress?.current * 100) / 6 + "%"}
+                bg={!isDoneToday ? "whiteAlpha.300" : "green.500"}
+                position="absolute"
+                left={0}
+                bottom={0}
+                borderRadius="10px"
+                height="4px"
+                transition="all 0.2s ease"
+              />
+            </Box>
+          )}
           {/* <Progress
             position='absolute'
             w='100%'
@@ -254,6 +256,7 @@ const Todo: React.FC<IProps> = ({
             <TodoExpansion
               handleCheckTodo={handleCheckTodo}
               isOpen={isOpen}
+              isRepeats={todo.repeats}
               currentProgress={todo?.progress?.current}
               handleIncreaseProgress={handleIncreaseProgress}
               handleExpand={handleExpand}
