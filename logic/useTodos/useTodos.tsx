@@ -1,15 +1,15 @@
-import { createContext, SetStateAction, useContext, useState } from 'react';
+import { createContext, SetStateAction, useContext, useState } from "react";
 import {
   ITodo,
   IDndParam,
   ITodosState,
   TPriority,
   ITag,
-} from '../../config/interfaces';
-import { v4 as uuid } from 'uuid';
-import { useAuth } from '../useAuth/useAuth';
-import { updateTags, updateTodos } from '../../firebase/firestore';
-import { usePhases } from '../usePhases/usePhases';
+} from "../../config/interfaces";
+import { v4 as uuid } from "uuid";
+import { useAuth } from "../useAuth/useAuth";
+import { updateTags, updateTodos } from "../../firebase/firestore";
+import { usePhases } from "../usePhases/usePhases";
 
 interface ITodosContext {
   todos: ITodosState;
@@ -30,6 +30,8 @@ interface ITodosContext {
   tags: ITag[];
   setTags: React.Dispatch<SetStateAction<ITag[]>>;
   changeUserTags: (tags: ITag[]) => void;
+  setTrayLength: React.Dispatch<SetStateAction<number>>;
+  trayLength: number;
 }
 
 const TodosContext = createContext<ITodosContext>(undefined as ITodosContext);
@@ -39,12 +41,12 @@ export function useTodos() {
 }
 
 const emptyTodos = {
-  '0': [],
-  '1': [],
-  '2': [],
-  '3': [],
-  '4': [],
-  '5': [],
+  "0": [],
+  "1": [],
+  "2": [],
+  "3": [],
+  "4": [],
+  "5": [],
 };
 
 export const TodosProvider: React.FC = ({ children }) => {
@@ -53,6 +55,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 
   const [todos, setTodos] = useState(emptyTodos as ITodosState);
   const [tags, setTags] = useState([] as ITag[]);
+  const [trayLength, setTrayLength] = useState(0);
   let [prayerTimes, setPrayerTimes] = useState({} as any);
 
   const changePrayerTimes = (p) => {
@@ -73,6 +76,9 @@ export const TodosProvider: React.FC = ({ children }) => {
       currentUser && updateTodos(currentUser.uid, newTodos);
       setTodos(newTodos);
     } else {
+      if (source.phase === 0) setTrayLength(trayLength - 1);
+      else if (destination.phase === 0) setTrayLength(trayLength + 1);
+
       const sourceItems = [...items];
       const destinationItems = [...todos[destination.phase]];
       destinationItems.splice(destination.index, 0, reorderedItem);
@@ -87,15 +93,15 @@ export const TodosProvider: React.FC = ({ children }) => {
   };
 
   const addEmptyTodo = (phase: number): string => {
-    const newID = Math.floor(Math.random() * 100000) + '';
+    const newID = Math.floor(Math.random() * 100000) + "";
     const newTodo: ITodo = {
       id: newID,
-      title: 'new todo',
-      accent: '0',
+      title: "new todo",
+      accent: "0",
       tags: [],
       repeats: false,
       progress: { current: 0, goal: 100 },
-      priority: '1',
+      priority: "1",
     };
 
     const newTodos = {
@@ -260,6 +266,8 @@ export const TodosProvider: React.FC = ({ children }) => {
     prayerTimes,
     setPrayerTimes,
     changePrayerTimes,
+    setTrayLength,
+    trayLength,
   };
 
   return (

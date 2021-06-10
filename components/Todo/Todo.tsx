@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { ITodo } from "../../config/interfaces";
-import { Center, Flex, HStack, Square, Text, VStack } from "@chakra-ui/layout";
+import { Flex, HStack, Square, Text, VStack } from "@chakra-ui/layout";
 import { Box } from "@chakra-ui/layout";
 import {
   IconButton,
@@ -10,10 +10,10 @@ import {
   MenuItem,
   MenuList,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import TodoModal from "./components/TodoModal/TodoModal";
 import { BsThreeDots } from "react-icons/bs";
-import { FiRepeat } from "react-icons/fi";
 import { colors } from "../../config/data/mock";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -27,14 +27,28 @@ interface IProps {
   index: number;
   newTodoId: string;
   setNewTodoId: React.Dispatch<React.SetStateAction<string>>;
+  phaseIndex: number;
 }
 
-const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
-  const { deleteTodo, duplicateTodo, changeProgress } = useTodos();
+const Todo: React.FC<IProps> = ({
+  todo,
+  index,
+  phaseIndex,
+  newTodoId,
+  setNewTodoId,
+}) => {
+  const {
+    reOrderTodos,
+    trayLength,
+    deleteTodo,
+    duplicateTodo,
+    changeProgress,
+  } = useTodos();
   const { isOpen, onToggle } = useDisclosure();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const toast = useToast();
 
-  const handleExpand = (e) => {
+  const handleExpand = (e: any) => {
     if (e?.relatedTarget?.ariaLabel === "increase-progress") return;
     e.stopPropagation();
     e.target.focus();
@@ -42,11 +56,40 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
   };
   const handleIncreaseProgress = (e) => {
     e.stopPropagation();
-    // if (todo?.progress?.current >= 100) return;
-    // changeProgress(todo.id, todo?.progress?.current + 10);
-
     if (todo?.progress?.current >= 6) return;
     changeProgress(todo.id, todo?.progress?.current + 1);
+  };
+
+  const handleMoveToTray = () => {
+    const source = { phase: phaseIndex, index: index };
+    const destination = {
+      phase: 0,
+      index: trayLength + 1,
+    };
+    reOrderTodos(source, destination);
+  };
+
+  const handleCheckTodo = () => {
+    if (todo.repeats) {
+      handleMoveToTray();
+      toast({
+        title: "Moved to Tray!",
+        description: "You've made good progress so far!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Well Done!",
+        description: "You've made good progress so far!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+
+      deleteTodo(todo.id);
+    }
   };
 
   const day = new Date().getDay();
@@ -109,7 +152,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             w="100%"
             position="relative"
           >
-            {todo.repeats && (
+            {/* {todo.repeats && (
               <Center
                 maxHeight="35px"
                 minHeight="30px"
@@ -121,7 +164,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
               >
                 <FiRepeat />
               </Center>
-            )}
+            )} */}
 
             {/* {isDoneToday && (
               <Center
@@ -184,6 +227,14 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
                         </Text>
                       </HStack>
                     </MenuItem>
+                    <MenuItem onClick={handleMoveToTray}>
+                      <HStack>
+                        <HiDuplicate size={20} />
+                        <Text color="whiteAlpha.800" fontWeight={500}>
+                          To Tray
+                        </Text>
+                      </HStack>
+                    </MenuItem>
                   </VStack>
                 </MenuList>
               </Menu>
@@ -201,6 +252,7 @@ const Todo: React.FC<IProps> = ({ todo, index, newTodoId, setNewTodoId }) => {
             />
             <TodoAccent todo={todo} />
             <TodoExpansion
+              handleCheckTodo={handleCheckTodo}
               isOpen={isOpen}
               currentProgress={todo?.progress?.current}
               handleIncreaseProgress={handleIncreaseProgress}

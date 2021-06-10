@@ -1,9 +1,9 @@
-import React from 'react';
-import Phase from './Phase/Phase';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { useTodos } from '../../logic/useTodos/useTodos';
-import Tray from '../Tray/Tray';
-import { Stack, VStack } from '@chakra-ui/layout';
+import React from "react";
+import Phase from "./Phase/Phase";
+import { DragDropContext } from "react-beautiful-dnd";
+import { useTodos } from "../../logic/useTodos/useTodos";
+import Tray from "../Tray/Tray";
+import { Stack, VStack } from "@chakra-ui/layout";
 
 const Phases: React.FC = () => {
   const { reOrderTodos } = useTodos();
@@ -29,11 +29,11 @@ const Phases: React.FC = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <VStack w='96%' m='auto'>
+      <VStack w="96%" m="auto">
         <Stack
-          direction={{ base: 'column', lg: 'row' }}
-          w='100%'
-          alignItems={{ base: 'center', lg: 'flex-start' }}
+          direction={{ base: "column", lg: "row" }}
+          w="100%"
+          alignItems={{ base: "center", lg: "flex-start" }}
         >
           <Phase phase={1} />
           <Phase phase={2} />
