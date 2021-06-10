@@ -1,7 +1,7 @@
-import { TodosProvider } from '../logic/useTodos/useTodos';
-import { AuthProvider } from '../logic/useAuth/useAuth';
-import Head from 'next/head';
-import PhasesProvider from '../logic/usePhases/usePhases';
+import { TodosProvider } from "../logic/useTodos/useTodos";
+import { AuthProvider } from "../logic/useAuth/useAuth";
+import Head from "next/head";
+import PhasesProvider from "../logic/usePhases/usePhases";
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -10,11 +10,19 @@ const Layout: React.FC = ({ children }) => {
         <TodosProvider>
           <Head>
             <title>Starling</title>
-            <link rel='shortcut icon' href='/logo.svg' />
-            <link rel='preconnect' href='https://fonts.gstatic.com' />
+            <link rel="shortcut icon" href="/logo.svg" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <meta
+              name="description"
+              content="A medical booking website that links patients with doctors"
+            />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link
-              href='https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap'
-              rel='stylesheet'
+              href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+              rel="stylesheet"
             />
           </Head>
           {children}

@@ -11,7 +11,6 @@ import {
   IconButton,
   MenuList,
   MenuItem,
-  Wrap,
 } from "@chakra-ui/react";
 import { MdSettings } from "react-icons/md";
 import UserModal from "../UserModal/UserModal";
@@ -48,7 +47,7 @@ const Navbar: React.FC = () => {
 
       <NextTodo phase={currentPhase} />
 
-      <Wrap direction="row" spacing={4} w={{ base: "100px", lg: "200px" }}>
+      <HStack spacing={4}>
         {currentUser?.uid ? (
           <HStack w="100%" justifyContent="flex-end">
             <UserModal
@@ -113,7 +112,7 @@ const Navbar: React.FC = () => {
             </Link>
           </>
         )}
-      </Wrap>
+      </HStack>
     </HStack>
   );
 };

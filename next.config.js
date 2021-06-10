@@ -1,10 +1,18 @@
 // next.config.js
-module.exports = {
+
+const withPWA = require("next-pwa");
+
+module.exports = withPWA({
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
   images: {
     domains: [
-      'firebasestorage.googleapis.com',
-      'https://firebasestorage.googleapis.com',
+      "firebasestorage.googleapis.com",
+      "https://firebasestorage.googleapis.com",
     ],
   },
-  target: 'serverless',
-};
+  target: "serverless",
+});

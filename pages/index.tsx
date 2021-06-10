@@ -1,4 +1,4 @@
-import { resetServerContext } from "react-beautiful-dnd";
+// import { resetServerContext } from "react-beautiful-dnd";
 import Phases from "../components/Phases/Phases";
 import DayProgress from "../components/DayProgress/DayProgress";
 import { Box } from "@chakra-ui/layout";
@@ -39,8 +39,8 @@ const Home = () => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
-  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+// export const getServerSideProps = async () => {
+//   resetServerContext();
 
-  return { props: { data: [] } };
-};
+//   return { props: { data: [] } };
+// };
