@@ -1,9 +1,6 @@
 import Layout from "../components/Layout";
 import theme from "../config/styles/theme";
-import {
-  ThemeProvider as StyledThemeProvider,
-  createGlobalStyle,
-} from "styled-components";
+
 import {
   ThemeProvider as ChakraThemeProvider,
   CSSReset,
