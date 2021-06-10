@@ -1,3 +1,16 @@
+img {
+  width: 100%;
+  display: block;
+}
+
+.debug {
+  border: 1px solid red !important;
+}
+
+.debug > * {
+  border: 1px solid blue !important;
+}
+
 @keyframes next-btn {
   0% {
     transform: scale(1.1);

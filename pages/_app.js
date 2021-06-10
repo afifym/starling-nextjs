@@ -12,21 +12,6 @@ import { analytics, perf } from "../firebase/config";
 import { useEffect } from "react";
 import "../config/styles/styles.css";
 
-const GlobalStyles = createGlobalStyle`
-    img {
-      width: 100%;
-      display: block;
-    }
-
-    .debug {
-      border: 1px solid red !important;
-    }
-
-    .debug > * {
-      border: 1px solid blue !important;
-    }
-`;
-
 const chakraTheme = extendTheme({
   config: {
     initialColorMode: "dark",
@@ -59,7 +44,6 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider init theme={chakraTheme}>
       <CSSReset />
       <StyledThemeProvider theme={theme}>
-        <GlobalStyles />
         <Layout>
           <Component {...pageProps} />
         </Layout>
