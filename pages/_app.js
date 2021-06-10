@@ -43,11 +43,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider init theme={chakraTheme}>
       <CSSReset />
-      <StyledThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </StyledThemeProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ChakraProvider>
   );
 }
