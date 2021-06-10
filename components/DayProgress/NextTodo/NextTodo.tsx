@@ -1,8 +1,8 @@
-import React from 'react';
-import { useTodos } from '../../../logic/useTodos/useTodos';
-import styled from 'styled-components';
-import { Center, Heading } from '@chakra-ui/layout';
-import { usePhases } from '../../../logic/usePhases/usePhases';
+import React from "react";
+import { useTodos } from "../../../logic/useTodos/useTodos";
+import styled from "styled-components";
+import { Center, Heading } from "@chakra-ui/layout";
+import { usePhases } from "../../../logic/usePhases/usePhases";
 
 interface IProps {
   phase: number;
@@ -23,7 +23,7 @@ const Wrapper = styled(Center)`
 
   .animation {
     &::before {
-      content: '';
+      content: "";
       width: 100%;
       height: 100%;
       position: absolute;
@@ -44,24 +44,35 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
   const nextTodo = todos[phase] && todos[phase][0];
 
   return (
-    <Wrapper w='100%' h='100%'>
+    <Wrapper
+      position="absolute"
+      top={{ base: "150%", lg: "50%" }}
+      left="50%"
+      // top={{ base: "0", lg: "50%" }}
+      // left={{ base: "0", lg: "50%" }}
+      style={{ transform: "translate(-50%, -50%)" }}
+      w="100%"
+      h="100%"
+    >
       <Heading
-        textAlign='center'
-        fontSize='3xl'
-        bg={isNaN(currentPhase) ? 'green' : 'white'}
-        color={isNaN(currentPhase) ? 'white' : 'blackAlpha.800'}
+        textAlign="center"
+        w="fit-content"
+        // w={{ base: "100%", lg: "fit-content" }}
+        fontSize="3xl"
+        bg={isNaN(currentPhase) ? "green" : "white"}
+        color={isNaN(currentPhase) ? "white" : "blackAlpha.800"}
         px={7}
         py={4}
-        w='fit-content'
-        borderRadius='48px'
-        className='animation'
-        position='relative'
-        boxShadow='dark-lg'
-        textTransform='capitalize'
+        borderRadius="48px"
+        // borderTopRadius={{ base: "0", lg: "48px" }}
+        className="animation"
+        position="relative"
+        boxShadow="dark-lg"
+        textTransform="capitalize"
       >
         {isNaN(currentPhase)
-          ? currentPhase + ' Prayer'
-          : nextTodo?.title || 'No tasks'}
+          ? currentPhase + " Prayer"
+          : nextTodo?.title || "No tasks"}
       </Heading>
     </Wrapper>
   );

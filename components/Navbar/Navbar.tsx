@@ -27,15 +27,15 @@ const Navbar: React.FC = () => {
   return (
     <HStack
       justifyContent="space-between"
-      alignItems="center"
+      alignItems={{ base: "flex-start", lg: "center" }}
       m="auto"
-      mt={9}
+      mt={{ base: 3, lg: 7 }}
       mb="80px"
       w="96%"
       position="relative"
       bg="gray.800"
     >
-      <Box w={{ base: "80px", lg: "120px" }}>
+      <Box w={{ base: "80px", lg: "120px" }} position="relative" zIndex={10}>
         <Link href="/">
           <a style={{ width: "100%" }}>
             <img
@@ -45,18 +45,12 @@ const Navbar: React.FC = () => {
           </a>
         </Link>
       </Box>
-      <Box
-        position="absolute"
-        top="50%"
-        left="50%"
-        style={{ transform: "translate(-50%, -50%)" }}
-      >
-        <NextTodo phase={currentPhase} />
-      </Box>
+
+      <NextTodo phase={currentPhase} />
 
       <Wrap direction="row" spacing={4} w={{ base: "100px", lg: "200px" }}>
         {currentUser?.uid ? (
-          <HStack ml="auto" mr={6}>
+          <HStack w="100%" justifyContent="flex-end">
             <UserModal
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
