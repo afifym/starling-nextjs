@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { MdSettings } from "react-icons/md";
 import UserModal from "../UserModal/UserModal";
-
 import { BiLogOut } from "react-icons/bi";
 import { usePhases } from "../../logic/usePhases/usePhases";
 
@@ -28,13 +27,13 @@ const Navbar: React.FC = () => {
       justifyContent="space-between"
       alignItems={{ base: "flex-start", lg: "center" }}
       m="auto"
-      mt={{ base: 3, lg: 7 }}
-      mb="80px"
-      w="96%"
+      mt={{ base: 3, lg: 10 }}
+      mb={{ base: "10em", lg: "5em" }}
+      w={{ base: "85%", lg: "96%" }}
       position="relative"
       bg="gray.800"
     >
-      <Box w={{ base: "80px", lg: "120px" }} position="relative" zIndex={10}>
+      <Box w={{ base: "90px", lg: "120px" }} position="relative" zIndex={10}>
         <Link href="/">
           <a style={{ width: "100%" }}>
             <img

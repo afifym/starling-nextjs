@@ -15,7 +15,7 @@ const NextTodo: React.FC<IProps> = ({ phase }) => {
   return (
     <Center
       position="absolute"
-      top={{ base: "150%", lg: "50%" }}
+      top={{ base: "220%", lg: "50%" }}
       left="50%"
       // top={{ base: "0", lg: "50%" }}
       // left={{ base: "0", lg: "50%" }}
